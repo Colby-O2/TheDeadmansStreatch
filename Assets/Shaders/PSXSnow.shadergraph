@@ -65,6 +65,9 @@
         },
         {
             "m_Id": "f4808b7ec9bc4a1ba53bf4a3960144ff"
+        },
+        {
+            "m_Id": "703501c898b4410eb20323a03ced2a97"
         }
     ],
     "m_Keywords": [
@@ -366,6 +369,12 @@
         },
         {
             "m_Id": "741566df92fa4459b8042207176643bf"
+        },
+        {
+            "m_Id": "5b127fc2c1094e9cafd67a3150bd7222"
+        },
+        {
+            "m_Id": "7cccacfd61b24995b7011ac713e1f344"
         }
     ],
     "m_GroupDatas": [
@@ -1078,6 +1087,20 @@
                     "m_Id": "73e739e63d7949a78d5bba7bcc71b816"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "7cccacfd61b24995b7011ac713e1f344"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "5b127fc2c1094e9cafd67a3150bd7222"
+                },
+                "m_SlotId": 1
             }
         },
         {
@@ -1886,7 +1909,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "013da93d81434d8a92c4068267dc3298",
     "m_Id": 0,
-    "m_DisplayName": "SnowMask",
+    "m_DisplayName": "FootstepSnowMask",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2744,7 +2767,11 @@
     "m_Type": "UnityEditor.ShaderGraph.CategoryData",
     "m_ObjectId": "2199a0e2d1124652a8c9371e2a85b864",
     "m_Name": "",
-    "m_ChildObjectList": []
+    "m_ChildObjectList": [
+        {
+            "m_Id": "703501c898b4410eb20323a03ced2a97"
+        }
+    ]
 }
 
 {
@@ -3633,6 +3660,19 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SamplerStateMaterialSlot",
+    "m_ObjectId": "3c4e913e523044318b2f9bfab752d2f8",
+    "m_Id": 3,
+    "m_DisplayName": "Sampler",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Sampler",
+    "m_StageCapability": 3,
+    "m_BareResource": false
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "3cd570d3beff49bd9f1bdef85120c7ef",
@@ -3878,10 +3918,10 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
     "m_ObjectId": "42e0a941b60a4b59beb66c4c7b8e0b7a",
     "m_Id": -428458965,
-    "m_DisplayName": "SnowMask",
+    "m_DisplayName": "FootstepSnowMask",
     "m_SlotType": 0,
     "m_Hidden": false,
-    "m_ShaderOutputName": "_SnowMask",
+    "m_ShaderOutputName": "_FootstepSnowMask",
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
@@ -4274,6 +4314,38 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "4c1c6d4aaeed40e29a92ad37461922b3",
+    "m_Id": 5,
+    "m_DisplayName": "G",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "G",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": [],
+    "m_LiteralMode": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "4cb791f077134fa68322caba4bd5753b",
+    "m_Id": 4,
+    "m_DisplayName": "R",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "R",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": [],
+    "m_LiteralMode": false
+}
+
+{
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "4cc657cd11874898958d740ce3f51f87",
@@ -4447,10 +4519,10 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
     "m_ObjectId": "4edbba525a7a4cb98ea1fbd9c6b05912",
     "m_Id": -428458965,
-    "m_DisplayName": "SnowMask",
+    "m_DisplayName": "FootstepSnowMask",
     "m_SlotType": 0,
     "m_Hidden": false,
-    "m_ShaderOutputName": "_SnowMask",
+    "m_ShaderOutputName": "_FootstepSnowMask",
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
@@ -4636,6 +4708,31 @@
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "5359ae2d548d4870a59479423ddd19f9",
+    "m_Id": 0,
+    "m_DisplayName": "RGBA",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "RGBA",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
     },
     "m_Labels": []
 }
@@ -4862,6 +4959,66 @@
     "m_StageCapability": 3,
     "m_Value": false,
     "m_DefaultValue": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SampleTexture2DNode",
+    "m_ObjectId": "5b127fc2c1094e9cafd67a3150bd7222",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Sample Texture 2D",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1721.999755859375,
+            "y": 225.99998474121095,
+            "width": 208.0,
+            "height": 432.99993896484377
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "5359ae2d548d4870a59479423ddd19f9"
+        },
+        {
+            "m_Id": "4cb791f077134fa68322caba4bd5753b"
+        },
+        {
+            "m_Id": "4c1c6d4aaeed40e29a92ad37461922b3"
+        },
+        {
+            "m_Id": "9540d854c2d64e40b22db4ad2cbf2db4"
+        },
+        {
+            "m_Id": "ec842b1a60634b84aa9d6065d9de2601"
+        },
+        {
+            "m_Id": "b6ddf2550c7e4f2ba15da9b273cd111a"
+        },
+        {
+            "m_Id": "c5fe7dd32ebc45aea1a8089c43f91b3e"
+        },
+        {
+            "m_Id": "3c4e913e523044318b2f9bfab752d2f8"
+        }
+    ],
+    "synonyms": [
+        "tex2d"
+    ],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_TextureType": 0,
+    "m_NormalMapSpace": 0,
+    "m_EnableGlobalMipBias": true,
+    "m_MipSamplingMode": 0
 }
 
 {
@@ -5793,6 +5950,43 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "703501c898b4410eb20323a03ced2a97",
+    "m_Guid": {
+        "m_GuidSerialized": "936c7fb1-eb8a-4513-bc92-e5f469b49958"
+    },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
+    "m_Name": "SnowMask",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "SnowMask",
+    "m_DefaultReferenceName": "_SnowMask",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": true,
+    "hlslDeclarationOverride": 1,
+    "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
+    "m_Value": {
+        "m_SerializedTexture": "",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "useTexelSize": true,
+    "isHDR": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "70b52a376f68476a9b6ccf5b78d0eae9",
     "m_Id": -1042188958,
@@ -6390,6 +6584,42 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "7cccacfd61b24995b7011ac713e1f344",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1537.9998779296875,
+            "y": 225.99998474121095,
+            "width": 141.0,
+            "height": 33.99998474121094
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "87d0da137efe49e8bcd1a33ad0808baa"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "703501c898b4410eb20323a03ced2a97"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BooleanNode",
     "m_ObjectId": "7d7de0f60c0148ee9493b373a0b9314f",
     "m_Group": {
@@ -6845,6 +7075,19 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "87d0da137efe49e8bcd1a33ad0808baa",
+    "m_Id": 0,
+    "m_DisplayName": "SnowMask",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.RemapNode",
     "m_ObjectId": "884799733a57495e8d76c2d0657aae4f",
     "m_Group": {
@@ -7065,7 +7308,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "8e941059319a4c138fc7f9be2c260917",
     "m_Id": 0,
-    "m_DisplayName": "SnowMask",
+    "m_DisplayName": "FootstepSnowMask",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -7372,6 +7615,22 @@
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "9540d854c2d64e40b22db4ad2cbf2db4",
+    "m_Id": 6,
+    "m_DisplayName": "B",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "B",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -8105,10 +8364,10 @@
     "promotedFromAssetID": "",
     "promotedFromCategoryName": "",
     "promotedOrdering": -1,
-    "m_Name": "SnowMask",
+    "m_Name": "FootstepSnowMask",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "SnowMask",
-    "m_DefaultReferenceName": "_SnowMask",
+    "m_RefNameGeneratedByDisplayName": "FootstepSnowMask",
+    "m_DefaultReferenceName": "_FootstepSnowMask",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -8329,6 +8588,24 @@
     },
     "m_Labels": [],
     "m_Space": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "b6ddf2550c7e4f2ba15da9b273cd111a",
+    "m_Id": 1,
+    "m_DisplayName": "Texture",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Texture",
+    "m_StageCapability": 3,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 0
 }
 
 {
@@ -8966,6 +9243,28 @@
     "m_Property": {
         "m_Id": "437e7973f7084d8ea9e5f86f22285867"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.UVMaterialSlot",
+    "m_ObjectId": "c5fe7dd32ebc45aea1a8089c43f91b3e",
+    "m_Id": 2,
+    "m_DisplayName": "UV",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "UV",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_Labels": [],
+    "m_Channel": 0
 }
 
 {
@@ -10519,6 +10818,22 @@
     },
     "_maskInput": "xz",
     "convertedMask": "xz"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "ec842b1a60634b84aa9d6065d9de2601",
+    "m_Id": 7,
+    "m_DisplayName": "A",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "A",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
