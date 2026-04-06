@@ -153,7 +153,7 @@ Material:
     - _UseVertexColor: 0
     - _VERTEXJITTERMODE: 1
     - _VertexPrecision: 32
-    - _WaterScale: 1619.03
+    - _WaterScale: 100
     - _WaterSharpness: 22.6
     - _WaterSpeed: 1
     - _WorkflowMode: 1

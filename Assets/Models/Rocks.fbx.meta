@@ -1,39 +1,9 @@
 fileFormatVersion: 2
-guid: 84a6ad2caa9472540aafce81e787a260
+guid: f24b4750b89cafc4ca67a243372c4c2c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Branch
-    second: {fileID: 2100000, guid: 43c672bc31aebbb41b21af12f257795e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Branch.001
-    second: {fileID: 2100000, guid: 43c672bc31aebbb41b21af12f257795e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Branch.002
-    second: {fileID: 2100000, guid: 43c672bc31aebbb41b21af12f257795e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: e52957b47468dfc4aa42e8129fec6c26, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 7e9cd44909b3dfe4b8eedc5ea5ea2154, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.003
-    second: {fileID: 2100000, guid: e52957b47468dfc4aa42e8129fec6c26, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -80,7 +50,7 @@ ModelImporter:
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
-    bakeAxisConversion: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
