@@ -21,14 +21,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TreeBranchMat
-  m_Shader: {fileID: -6465566751694194690, guid: 8b8b697340fa16848ba72c93c8de257b, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e33fd88a58c3d4048b28fc59e66b9b92, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _LIGHTINGMETHOD_LIT
   - _TEXTURESAMPLEMODE_POINT
-  - _VERTEXJITTERMODE_VIEW_SPACE
+  - _VERTEXJITTERMODE_DISABLED
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -112,7 +112,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorDepth: 32
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DepthDecay: 1.42
     - _DetailAlbedoMapScale: 1
@@ -150,11 +150,15 @@ Material:
     - _UseColorQuantization: 1
     - _UseSpecular: 0
     - _UseVertexColor: 0
-    - _VERTEXJITTERMODE: 1
+    - _VERTEXJITTERMODE: 0
     - _VertexPrecision: 32
     - _WaterScale: 700
     - _WaterSharpness: 10.12
     - _WaterSpeed: 0
+    - _WindFalloff: 4
+    - _WindNoiseScale: 1
+    - _WindSpeed: 1
+    - _WindStrength: 0.04
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZTest: 4
@@ -171,5 +175,6 @@ Material:
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _WaterColor: {r: 0, g: 0.37647057, b: 1, a: 1}
     - _WaterCrestColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WindDir: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

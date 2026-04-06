@@ -28,6 +28,8 @@ namespace ColbyO.VNTG.Example
         [Header("Forest Settings")]
         [Range(0, 5000)] public int _treeCount = 1000;
         [SerializeField] float _minHeight = 5f;
+        [SerializeField] Vector2 _treeHeight;
+        [SerializeField] Vector2 _treeWidth;
         [SerializeField] float _minSpacing = 4f;
         [SerializeField] int _treePrototypeIndex = 0;
 
@@ -98,6 +100,9 @@ namespace ColbyO.VNTG.Example
 
                 float worldHeight = data.GetInterpolatedHeight(x, z);
 
+                if (_treeHeight.y < _treeHeight.x) break;
+                if (_treeWidth.y < _treeWidth.x) break;
+
                 if (worldHeight >= _minHeight)
                 {
                     Vector3 currentPos = new Vector3(x * _width, 0, z * _length);
@@ -109,8 +114,8 @@ namespace ColbyO.VNTG.Example
                         tree.position = new Vector3(x, normalizedHeight, z);
 
                         tree.prototypeIndex = _treePrototypeIndex;
-                        tree.widthScale = Random.Range(0.8f, 1.2f);
-                        tree.heightScale = Random.Range(0.8f, 1.2f);
+                        tree.widthScale = Random.Range(_treeWidth.x, _treeWidth.y);
+                        tree.heightScale = Random.Range(_treeHeight.x, _treeHeight.y);
                         tree.rotation = Random.value * Mathf.PI * 2f;
                         tree.color = Color.white;
                         tree.lightmapColor = Color.white;

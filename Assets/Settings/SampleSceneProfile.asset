@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c3a44e259e3a94db4d09d23e808dbb, type: 3}
   m_Name: VolumetricLightingSettings
   m_EditorClassIdentifier: ColbyO.VolumetricLights::ColbyO.VolumetricLights.VolumetricLightingSettings
-  active: 1
+  active: 0
   Enabled:
     m_OverrideState: 1
     m_Value: 1

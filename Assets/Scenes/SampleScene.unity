@@ -1220,12 +1220,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490186236}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bc45e5e942e5d04f8619427d942b0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.VNTG.Example.TerrainGenerator
-  _terrain: {fileID: 0}
+  _terrain: {fileID: 765957321}
   _depth: 30
   _width: 500
   _length: 500
@@ -1235,11 +1235,13 @@ MonoBehaviour:
   _lacunarity: 1.6
   _offsetX: 100
   _offsetY: 100
-  _treeCount: 965
+  _treeCount: 1000
   _minHeight: 5
-  _minSpacing: 4
+  _treeHeight: {x: 0.8, y: 1.2}
+  _treeWidth: {x: 0.8, y: 1.2}
+  _minSpacing: 15
   _treePrototypeIndex: 0
-  _autoUpdate: 0
+  _autoUpdate: 1
 --- !u!1001 &564353028
 PrefabInstance:
   m_ObjectHideFlags: 0
