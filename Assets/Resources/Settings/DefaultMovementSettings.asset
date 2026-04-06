@@ -15,7 +15,7 @@ MonoBehaviour:
   ControllerSensitivityScaleFactor: 5
   Sensitivity: 0.1
   YLookLimit: {x: -30, y: 80}
-  InvertLookY: 0
+  InvertLookY: 1
   InvertLookX: 0
   Speed: 3.5
   SprintSpeedMul: 2
