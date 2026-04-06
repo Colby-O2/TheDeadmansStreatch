@@ -45,7 +45,7 @@ namespace ColbyO.VNTG.Example
             if (!_terrain) _terrain = GetComponent<Terrain>();
             if (_terrain == null || _terrain.terrainData == null) return;
 
-            GenerateHeightmap();
+            //GenerateHeightmap();
             SpawnTrees();
         }
 

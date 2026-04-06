@@ -118,7 +118,7 @@ namespace ColbyO.Untitled
             string fullPath = folderPath + "/" + fileName + ".png";
             string assetPath = "Assets/Resources/SnowMasks/" + fileName + ".png";
 
-            Texture2D tex = new Texture2D(data.SnowMask.width, data.SnowMask.height, TextureFormat.R8, false);
+            Texture2D tex = new Texture2D(data.SnowMask.width, data.SnowMask.height, TextureFormat.R16, false);
             RenderTexture.active = data.SnowMask;
             tex.ReadPixels(new Rect(0, 0, data.SnowMask.width, data.SnowMask.height), 0, 0);
             tex.Apply();

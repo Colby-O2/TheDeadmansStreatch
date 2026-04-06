@@ -3927,8 +3927,8 @@
     "m_ObjectId": "055bf941888a4edc9dc6904244e5667a",
     "m_Title": "Normal UV",
     "m_Position": {
-        "x": -2925.000244140625,
-        "y": 825.9999389648438
+        "x": -2925.0,
+        "y": 826.0
     }
 }
 
@@ -3939,7 +3939,7 @@
     "m_Title": "Metallic Correction",
     "m_Position": {
         "x": 2204.0,
-        "y": 775.000244140625
+        "y": 775.0
     }
 }
 
@@ -4417,7 +4417,7 @@
     "m_ObjectId": "0ed34102eb524004bd08c2c98ebe789e",
     "m_Title": "Sample Texture",
     "m_Position": {
-        "x": -1334.0001220703125,
+        "x": -1334.0,
         "y": 800.0
     }
 }
@@ -6346,8 +6346,8 @@
     "m_ObjectId": "2e3d1478bd7e4322aec2be4121b43073",
     "m_Title": "Vertex Colors",
     "m_Position": {
-        "x": -484.0000305175781,
-        "y": 426.000244140625
+        "x": -484.0,
+        "y": 426.0
     }
 }
 
@@ -6790,7 +6790,7 @@
     "m_Title": "Vertex Shading",
     "m_Position": {
         "x": 914.0,
-        "y": 174.99996948242188
+        "y": 175.0
     }
 }
 
@@ -8210,7 +8210,7 @@
     "m_ObjectId": "4b1df5429e1f47a68fd89d4c6ee4cff5",
     "m_Title": "Vertex Snapping",
     "m_Position": {
-        "x": -221.00001525878907,
+        "x": -221.0,
         "y": -2976.0
     }
 }
@@ -11946,7 +11946,7 @@
     "m_AlphaMode": 0,
     "m_RenderFace": 2,
     "m_AlphaClip": false,
-    "m_CastShadows": true,
+    "m_CastShadows": false,
     "m_ReceiveShadows": true,
     "m_DisableTint": false,
     "m_Sort3DAs2DCompatible": false,
@@ -12211,7 +12211,7 @@
     "m_Title": "Color Quantization",
     "m_Position": {
         "x": -47.0,
-        "y": 780.000244140625
+        "y": 780.0
     }
 }
 
@@ -14222,7 +14222,7 @@
     "m_Title": "Lit Shading",
     "m_Position": {
         "x": 100.0,
-        "y": 1290.000244140625
+        "y": 1290.0
     }
 }
 
@@ -14455,8 +14455,8 @@
     "m_ObjectId": "acc849cb1f2440a18f70e5dcedc95de7",
     "m_Title": "Final UV",
     "m_Position": {
-        "x": -2513.000244140625,
-        "y": 1080.000244140625
+        "x": -2513.0,
+        "y": 1080.0
     }
 }
 
@@ -15575,7 +15575,7 @@
     "m_ObjectId": "c0b9e549aa5d4b499a40e5449d10470f",
     "m_Title": "Snow Height",
     "m_Position": {
-        "x": -2052.000244140625,
+        "x": -2052.0,
         "y": -2445.0
     }
 }
@@ -17802,7 +17802,7 @@
     "m_ObjectId": "e1f637c38fc244649101f01c427de86d",
     "m_Title": "Affine Texture Mapping",
     "m_Position": {
-        "x": -2869.000244140625,
+        "x": -2869.0,
         "y": -854.0
     }
 }
@@ -17906,7 +17906,7 @@
     "m_ObjectId": "e549c305db164f2cae3b744fcb812ee0",
     "m_Title": "Snow Texture",
     "m_Position": {
-        "x": -96.00000762939453,
+        "x": -96.0,
         "y": 2942.0
     }
 }
