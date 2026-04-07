@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ColbyO.Untitled
+namespace ColbyO.Untitled.Player
 {
     [CreateAssetMenu(fileName = "DefaultMovementSettings", menuName = "Player/MovementSettings")]
     public class MovementSettings : ScriptableObject

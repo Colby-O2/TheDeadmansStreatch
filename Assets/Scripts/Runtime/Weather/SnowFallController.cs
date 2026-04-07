@@ -1,4 +1,7 @@
 using UnityEngine;
+
+using ColbyO.Untitled.Player;
+
 namespace ColbyO.Untitled
 {
     public class SnowFallController : MonoBehaviour

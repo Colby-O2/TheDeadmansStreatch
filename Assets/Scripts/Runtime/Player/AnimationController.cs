@@ -1,10 +1,15 @@
 using UnityEngine;
 
-namespace ColbyO.Untitled
+namespace ColbyO.Untitled.Player
 {
     public class AnimationController : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+
+        private void OnEnable()
+        {
+            UTGameManager.PlayerAnimationController = this;
+        }
 
         public void SetWalking(bool state)
         {

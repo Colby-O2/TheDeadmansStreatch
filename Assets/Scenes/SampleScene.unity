@@ -10997,7 +10997,7 @@ Transform:
   m_GameObject: {fileID: 942818619}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 429.54, y: 13.99, z: 114.8}
+  m_LocalPosition: {x: 415.03, y: 13.99, z: 114.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11048,6 +11048,7 @@ MonoBehaviour:
   _horizontalVelocity: {x: 0, y: 0}
   _movement: {x: 0, y: 0}
   _isSprinting: 0
+  _isFrozen: 0
   _viewController: {fileID: 330585548}
   _animationController: {fileID: 564353032}
   GravityScale: 1
@@ -11635,6 +11636,76 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5312739958639040973, guid: 1ee0af442e656fce5b15c8067ea06280, type: 3}
   m_PrefabInstance: {fileID: 1930788365}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1031533385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031533387}
+  - component: {fileID: 1031533386}
+  - component: {fileID: 1031533388}
+  m_Layer: 2
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1031533386
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031533385}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1031533387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031533385}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.09030521, z: -0, w: 0.99591416}
+  m_LocalPosition: {x: 423.16956, y: 10.87, z: 115.9851}
+  m_LocalScale: {x: 1, y: 4.9541, z: 11.038521}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 10.362, z: 0}
+--- !u!114 &1031533388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031533385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec4ab9185b09be4b96111237e34bd54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.RestrictedAreaTrigger
+  _pushBackDistance: 2.5
+  _walkSpeed: 3
+  _rotationSpeed: 10
+  _cameraTurnDuration: 1
 --- !u!1001 &1041491081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19644,3 +19715,4 @@ SceneRoots:
   - {fileID: 438809678}
   - {fileID: 1584369929}
   - {fileID: 1703658220}
+  - {fileID: 1031533387}

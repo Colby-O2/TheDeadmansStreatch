@@ -3,9 +3,10 @@ using InteractionSystem.Interfaces;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using PlazmaGames.Math;
+using System;
 using UnityEngine;
 
-namespace ColbyO.Untitled
+namespace ColbyO.Untitled.Player
 {
     public enum MovementState
     {
@@ -27,17 +28,21 @@ namespace ColbyO.Untitled
         [SerializeField, ReadOnly] private Vector2 _horizontalVelocity;
         [SerializeField, ReadOnly] private Vector2 _movement;
         [SerializeField, ReadOnly] private bool _isSprinting;
+        [SerializeField, ReadOnly] private bool _isFrozen = false;
 
         private CharacterController _controller;
         [SerializeField] private ViewController _viewController;
         [SerializeField] private AnimationController _animationController;
         private IInputMonoSystem _input;
-        
+
         private float Speed => _settings.Speed;
         public float GravityScale = 1.0f;
         private float Gravity => GRAVITY * _settings.GravityMul * GravityScale;
 
         public Vector3 Velocity => _controller.velocity;
+
+        public MovementSettings Settings => _settings;
+        public bool IsSprinting => _isSprinting;
 
         private void Awake()
         {
@@ -46,11 +51,16 @@ namespace ColbyO.Untitled
             _input.OnShift.AddListener(ToggleSprint);
         }
 
+        private void OnEnable()
+        {
+            UTGameManager.PlayerMoveController = this;
+        }
+
         private void Update()
         {
-            if (UTGameManager.LockMovement || UTGameManager.IsPaused)
+            if (UTGameManager.LockMovement || UTGameManager.IsPaused || _isFrozen)
             {
-                _animationController.SetWalking(false);
+                if (!_isFrozen) _animationController.SetWalking(false);
                 return;
             }
             _movement = Vector2.ClampMagnitude(_input.RawMovement, 1f);
@@ -67,7 +77,7 @@ namespace ColbyO.Untitled
             _animationController.SetSprinting(_isSprinting);
         }
 
-        private void ApplyGravity()
+        public void ApplyGravity()
         {
             _velocity.y = _state == MovementState.Airborne
                 ? Mathf.MoveTowards(_velocity.y, -_settings.TerminalVelocity, -Gravity * Time.deltaTime)
@@ -128,7 +138,7 @@ namespace ColbyO.Untitled
             }
         }
 
-        private void MoveController() => _controller.Move(_velocity * Time.deltaTime);
+        public void MoveController() => _controller.Move(_velocity * Time.deltaTime);
 
         private void UpdateMovement()
         {
@@ -147,9 +157,25 @@ namespace ColbyO.Untitled
             _controller.enabled = prev;
         }
 
+        public void FreezeJustMovement()
+        {
+            _isFrozen = true;
+            _input.DisableMovement(justMovement: true);
+            _velocity = Vector2.zero;
+            _horizontalVelocity = Vector2.zero;
+        }
+
+        public void UnfreezeJustMovement()
+        {
+            _isFrozen = false;
+            _input.EnableMovement(justMovement: true);
+        }
+
+
         public void Freeze()
         {
             UTGameManager.LockMovement = true;
+            _isFrozen = true;
             _input.DisableMovement();
             _velocity = Vector2.zero;
             _horizontalVelocity = Vector2.zero;
@@ -158,7 +184,13 @@ namespace ColbyO.Untitled
         public void Unfreeze()
         {
             UTGameManager.LockMovement = false;
+            _isFrozen = false;
             _input.EnableMovement();
+        }
+
+        public void SetHorizontalVelocity(Vector3 velocity)
+        {
+            _horizontalVelocity = velocity;
         }
     }
 }

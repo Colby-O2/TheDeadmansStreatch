@@ -6,7 +6,7 @@ using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
 
-namespace ColbyO.Untitled
+namespace ColbyO.Untitled.Player
 {
     public class ViewController : MonoBehaviour
     {
@@ -47,6 +47,12 @@ namespace ColbyO.Untitled
             _distance = _thirdPersonDistance;
             _targetOffset = _thirdPersonTargetOffset;
             _offset = _thirdPersonOffset;
+
+        }
+
+        private void OnEnable()
+        {
+            UTGameManager.PlayerViewController = this;
         }
 
         private void Start()
@@ -179,6 +185,14 @@ namespace ColbyO.Untitled
             {
                 _isTransitioning = false;
             });
+        }
+
+        public void LookAtPosition(Vector3 position, float duration)
+        {
+            GameObject temp = new GameObject("TempLookTarget");
+            temp.transform.position = position;
+            LookAt(temp.transform, duration);
+            Destroy(temp, duration);
         }
 
         private void LookAtStep(float t, float startYaw, float startPitch, float endYaw, float endPitch)

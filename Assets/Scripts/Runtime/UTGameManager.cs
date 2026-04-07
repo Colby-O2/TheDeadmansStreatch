@@ -14,6 +14,11 @@ namespace ColbyO.Untitled
         public static bool IsPaused = false;
         public static bool LockMovement = false;
 
+        public static Player.ViewController PlayerViewController;
+        public static Player.MovementController PlayerMoveController;
+        public static Player.AnimationController PlayerAnimationController;
+
+
         private void Awake()
         {
             Application.runInBackground = true;

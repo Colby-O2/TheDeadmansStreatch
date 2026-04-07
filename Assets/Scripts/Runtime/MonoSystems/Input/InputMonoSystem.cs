@@ -72,19 +72,19 @@ namespace ColbyO.Untitled.MonoSystems
         }
 
 
-        public void EnableMovement()
+        public void EnableMovement(bool justMovement = false)
         {
             _moveAction.Enable();
-            _lookAction.Enable();
+            if (!justMovement) _lookAction.Enable();
         }
 
-        public void DisableMovement()
+        public void DisableMovement(bool justMovement = false)
         {
             RawMovement = Vector2.zero;
             RawLook = Vector2.zero;
 
             _moveAction.Disable();
-            _lookAction.Disable();
+            if (!justMovement) _lookAction.Disable();
         }
     }
 }
