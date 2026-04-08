@@ -11,6 +11,8 @@ namespace ColbyO.VNTG.PSX
 {
     public class PSXEffectPass : ScriptableRenderPass
     {
+        private static readonly int AmbientColorID = Shader.PropertyToID("_VNTGAmbientColor");
+
         private const string _passName = "PSXEffectPass";
         private Material _material;
 

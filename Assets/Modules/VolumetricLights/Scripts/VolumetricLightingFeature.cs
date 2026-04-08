@@ -6,9 +6,9 @@ using UnityEngine.Rendering.Universal;
 // Author:  Colby-O
 // File:    PSXEffectFeature.cs
 //-----------------------------------------------------------------------
-namespace ColbyO.VNTG.PSX
+namespace ColbyO.VolumetricLights
 {
-    public sealed class PSXEffectFeature : ScriptableRendererFeature
+    public sealed class VolumetricLightingFeature : ScriptableRendererFeature
     {
         [Header("Settings")]
         [SerializeField] private RenderPassEvent _renderEvent = RenderPassEvent.BeforeRenderingPostProcessing;
@@ -16,23 +16,17 @@ namespace ColbyO.VNTG.PSX
         private Shader _psxEffectShader;
 
         private Material _material;
-        private PSXEffectPass _psxEffectPass;
-        private PSXSetGlobalParamters _psxSetGlobalParamtersPass;
+        private VolumetricLightingPass _volumetricLightingPass;
 
         public override void Create()
         {
             if (_psxEffectShader == null)
-                _psxEffectShader = Shader.Find("Hidden/PSXMaster_URP");
+                _psxEffectShader = Shader.Find("Hidden/VolumetricLighting");
 
             if (_material == null)
                 _material = CoreUtils.CreateEngineMaterial(_psxEffectShader);
 
-            _psxSetGlobalParamtersPass ??= new PSXSetGlobalParamters()
-            {
-                renderPassEvent = RenderPassEvent.BeforeRendering
-            };
-            
-            _psxEffectPass ??= new PSXEffectPass(_material)
+            _volumetricLightingPass ??= new VolumetricLightingPass(_material)
             {
                 renderPassEvent = _renderEvent
             };
@@ -40,14 +34,14 @@ namespace ColbyO.VNTG.PSX
 
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
-            if (_material == null || _psxEffectPass == null)
+            if (_material == null || _volumetricLightingPass == null)
             {
-                Debug.LogWarning("PSX Feature missing material or pass.");
+                Debug.LogWarning("Volumetric Lighting missing material or pass.");
                 return;
             }
 
             VolumeStack stack = VolumeManager.instance.stack;
-            PSXEffectSettings settings = stack.GetComponent<PSXEffectSettings>();
+            VolumetricLightingSettings settings = stack.GetComponent<VolumetricLightingSettings>();
 
             bool isGameCamera = renderingData.cameraData.cameraType == CameraType.Game;
             bool isSceneView = renderingData.cameraData.cameraType == CameraType.SceneView && settings.ShowInSceneView.value;
@@ -58,16 +52,8 @@ namespace ColbyO.VNTG.PSX
                 (isGameCamera || isSceneView)
             )
             {
-                _psxSetGlobalParamtersPass.Setup(settings.AmbientColor.value);
-
-                _psxEffectPass.Setup(_material);
-                renderer.EnqueuePass(_psxSetGlobalParamtersPass);
-                renderer.EnqueuePass(_psxEffectPass);
-            }
-            else
-            {
-                _psxSetGlobalParamtersPass.Setup(Color.black);
-                renderer.EnqueuePass(_psxSetGlobalParamtersPass);
+                _volumetricLightingPass.Setup(_material);
+                renderer.EnqueuePass(_volumetricLightingPass);
             }
         }
     }

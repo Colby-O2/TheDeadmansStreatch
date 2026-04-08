@@ -296,6 +296,11 @@ Shader "Hidden/PSXMaster_URP"
                     float dynamicFog = fogFactor + ((noise - 0.5) * _FogNoiseStrength * speckledMask * noiseMask);
 
                     fogColor = lerp(scene, _FogColor.rgb, saturate(dynamicFog));
+
+                    if (rawDepth == 0) 
+                    {
+                        return lerp(scene, fogColor, pow(_FogDensity, 0.1));
+                    }
                 }
 
                 return fogColor;

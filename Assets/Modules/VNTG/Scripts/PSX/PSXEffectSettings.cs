@@ -14,6 +14,9 @@ namespace ColbyO.VNTG.PSX
         public BoolParameter Enabled = new BoolParameter(true);
         public BoolParameter ShowInSceneView = new BoolParameter(false);
 
+        [Header("Lighting")]
+        public ColorParameter AmbientColor = new ColorParameter(Color.black);
+
         [Header("Pixelation")]
         public Vector2Parameter PixelResolution = new Vector2Parameter(new Vector2(256.0f, 256.0f));
         public ClampedFloatParameter ColorPrecision = new ClampedFloatParameter(32f, 0f, 256f);

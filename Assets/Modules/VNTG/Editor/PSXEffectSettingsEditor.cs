@@ -16,6 +16,8 @@ namespace ColbyO.VNTG.Editor
         private SerializedDataParameter _ShowInSceneView;
 
         private SerializedDataParameter _PixelResolution;
+
+        private SerializedDataParameter _AmbientColor;
         private SerializedDataParameter _ColorPrecision;
 
         private SerializedDataParameter _EnableDither;
@@ -40,6 +42,8 @@ namespace ColbyO.VNTG.Editor
             _Enabled = Unpack(o.Find(x => x.Enabled));
             _ShowInSceneView = Unpack(o.Find(x => x.ShowInSceneView));
 
+            _AmbientColor = Unpack(o.Find(x => x.AmbientColor));
+
             _PixelResolution = Unpack(o.Find(x => x.PixelResolution));
             _ColorPrecision = Unpack(o.Find(x => x.ColorPrecision));
 
@@ -63,6 +67,9 @@ namespace ColbyO.VNTG.Editor
         {
             PropertyField(_Enabled);
             PropertyField(_ShowInSceneView);
+
+            EditorGUILayout.Space();
+            PropertyField(_AmbientColor);
 
             EditorGUILayout.Space();
             PropertyField(_PixelResolution);

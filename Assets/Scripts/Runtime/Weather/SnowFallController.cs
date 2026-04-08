@@ -7,9 +7,12 @@ namespace ColbyO.Untitled
     public class SnowFallController : MonoBehaviour
     {
         [SerializeField] private MovementController _playerController;
+        [SerializeField] private float _leadFactor = 2.0f;
 
         private ParticleSystem _system;
         private ParticleSystem.VelocityOverLifetimeModule _velLifetime;
+
+        private ParticleSystem.ShapeModule _shape;
 
         private float _vlXMin;
         private float _vlXMax;
@@ -19,6 +22,7 @@ namespace ColbyO.Untitled
         private void Awake()
         {
             _system = GetComponent<ParticleSystem>();
+            _shape = _system.shape;
             _velLifetime = _system.velocityOverLifetime;
             _velLifetime.enabled = true;
             _vlXMin = _velLifetime.x.constantMin;
@@ -32,6 +36,9 @@ namespace ColbyO.Untitled
             Vector3 d = _playerController.Velocity;
             _velLifetime.x = new ParticleSystem.MinMaxCurve(_vlXMin - d.x, _vlXMax - d.x);
             _velLifetime.z = new ParticleSystem.MinMaxCurve(_vlZMin - d.z, _vlZMax - d.z);
+
+
+            _shape.position = new Vector3(d.x * _leadFactor, _shape.position.y, d.z * _leadFactor);
         }
     }
 }
