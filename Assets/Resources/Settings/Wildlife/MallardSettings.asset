@@ -29,9 +29,10 @@ MonoBehaviour:
   SwimSpread: 3
   IdleRadius: 4
   IdleWait: {x: 2, y: 7}
-  ChanceToLand: 0.05
+  ChanceToLand: 0.1
   LandingDetectionRadius: 20
-  LandingSlowdownDistance: 7
-  LandingRotationFlatDistance: 10
+  LandingSlowdownDistance: 1
+  LandingRotationFlatttenDistance: 1
+  MaxDiveAngle: 15
   ChanceToTakeoff: 0.01
   TakeoffLevelingZone: 100

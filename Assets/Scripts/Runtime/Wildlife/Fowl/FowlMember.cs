@@ -11,6 +11,7 @@ namespace ColbyO.Untitled.Wildlife
         public Vector3 NoiseSeed;
         public float SpeedMultiplier;
         public Vector3 CurrentAnimatedOffset;
+        public Vector3 MovementVelocity;
 
         public Vector3 IdleLocalTarget;
         public float NextIdleChangeTime;

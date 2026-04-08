@@ -31,8 +31,9 @@ namespace ColbyO.Untitled
         [Header("Landing Settings")]
         [Range(0, 1)] public float ChanceToLand = 0.05f;
         public float LandingDetectionRadius = 20f;
-        public float LandingSlowdownDistance = 7f;
-        public float LandingRotationFlatDistance = 10f;
+        [Range(0, 1)] public float LandingSlowdownDistance = 1f;
+        [Range(0, 1)] public float LandingRotationFlatttenDistance = 1f;
+        public float MaxDiveAngle = 15.0f;
 
         [Header("Takeoff Settings")]
         [Range(0, 1)] public float ChanceToTakeoff = 0.05f;

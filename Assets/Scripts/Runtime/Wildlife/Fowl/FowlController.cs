@@ -24,6 +24,7 @@ namespace ColbyO.Untitled.Wildlife
         private Bounds _flightBounds;
         private float _waitTime;
         private float _elapsedTimeSinceMove;
+        private float _heightAtLandStart;
 
         private void Update()
         {
@@ -264,33 +265,27 @@ namespace ColbyO.Untitled.Wildlife
             float distanceXZ = Vector3.Distance(transform.position, flatTarget);
             float heightToWater = transform.position.y - WaterSwimHeight;
 
-            float normalizedHeight = Mathf.Clamp01(heightToWater / _settings.LandingSlowdownDistance);
-            float spreadFactor = 1.0f - (normalizedHeight * normalizedHeight);
+            float normalizedHeight = Mathf.Clamp01(heightToWater / (_heightAtLandStart * _settings.LandingSlowdownDistance));
+            float transitionProgress = 1.0f - normalizedHeight;
 
-            float time = Time.time * _settings.AirDriftSpeed;
             for (int i = 0; i < _flock.Count; i++)
             {
                 FowlMember bird = _flock[i];
 
-                int side = (i % 2 == 0) ? 1 : -1;
-                int row = (i + 1) / 2;
-                if (i == 0) row = 0;
+                float angle = (bird.NoiseSeed.x % 100f) / 100f * Mathf.PI * 2f;
+                float radiusMultiplier = (bird.NoiseSeed.z % 100f) / 100f;
+                float radius = 3.0f * _settings.SwimSpread * radiusMultiplier;
 
-                Vector3 vFormation = new Vector3(side * row * _settings.VSpacing, bird.GroupOffset.y, -row * _settings.VSpacing);
+                Vector3 circlePos = new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
 
-                Vector3 messyOffset = new Vector3(
-                    (Mathf.Abs(bird.NoiseSeed.x % 8f) - 4f),
-                    -bird.GroupOffset.y,
-                    (Mathf.Abs(bird.NoiseSeed.z % 8f) - 4f)
+                Vector3 targetLocalPos = Vector3.Lerp(bird.GroupOffset, circlePos, transitionProgress);
+
+                bird.Transform.localPosition = Vector3.SmoothDamp(
+                    bird.Transform.localPosition,
+                    targetLocalPos,
+                    ref bird.MovementVelocity,
+                    0.8f
                 );
-                Vector3 messyPos = vFormation + messyOffset;
-
-                Vector3 targetOffset = Vector3.Lerp(vFormation, messyPos, spreadFactor);
-
-                float x = (Mathf.PerlinNoise(time + bird.NoiseSeed.x, 0) - 0.5f) * _settings.AirDriftAmount;
-                float z = (Mathf.PerlinNoise(time + bird.NoiseSeed.z, 0) - 0.5f) * _settings.AirDriftAmount;
-
-                bird.Transform.localPosition = Vector3.Lerp(bird.Transform.localPosition, targetOffset + new Vector3(x, 0, z), Time.deltaTime * 4f);
             }
 
             Vector3 moveDir = (_currentDestination - transform.position).normalized;
@@ -301,13 +296,26 @@ namespace ColbyO.Untitled.Wildlife
 
             if (moveDir != Vector3.zero)
             {
-                Quaternion lookRot = Quaternion.LookRotation(moveDir);
-                Quaternion levelRot = Quaternion.Euler(0, lookRot.eulerAngles.y, 0);
+                Vector3 flatLookDir = new Vector3(moveDir.x, 0, moveDir.z);
 
-                float heightFactor = Mathf.Clamp01((heightToWater - 3.0f) / _settings.LandingRotationFlatDistance);
+                if (flatLookDir.sqrMagnitude > 0.001f)
+                {
+                    Quaternion levelRot = Quaternion.LookRotation(flatLookDir);
 
-                Quaternion targetRot = Quaternion.Slerp(levelRot, lookRot, heightFactor);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _settings.TurnSpeed * Time.deltaTime);
+                    Quaternion diveRot = Quaternion.LookRotation(moveDir);
+                    Vector3 diveAngles = diveRot.eulerAngles;
+
+                    float pitch = diveAngles.x;
+                    if (pitch > 180) pitch -= 360; 
+                    pitch = Mathf.Clamp(pitch, -5f, _settings.MaxDiveAngle);
+
+                    diveRot = Quaternion.Euler(pitch, diveAngles.y, 0);
+
+                    float heightFactor = Mathf.Clamp01((heightToWater - 2.0f) / (_heightAtLandStart * _settings.LandingRotationFlatttenDistance));
+
+                    Quaternion targetRot = Quaternion.Slerp(levelRot, diveRot, heightFactor);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _settings.TurnSpeed * Time.deltaTime);
+                }
             }
 
             if (Vector3.Distance(transform.position, _currentDestination.SetY(WaterSwimHeight)) < 0.5f)
@@ -327,10 +335,14 @@ namespace ColbyO.Untitled.Wildlife
 
             foreach (FowlMember bird in _flock)
             {
+                bird.MovementVelocity = Vector3.zero;
+
                 bird.Self.Show(FowlState.Swimming);
 
                 Vector2 randomCircle = Random.insideUnitCircle * _settings.SwimSpread;
                 bird.GroupOffset = new Vector3(randomCircle.x, 0, randomCircle.y);
+
+                bird.CurrentAnimatedOffset = bird.Transform.localPosition;
 
                 PickNewIdleSpot(bird);
             }
@@ -433,6 +445,8 @@ namespace ColbyO.Untitled.Wildlife
         {
             _currentState = FowlState.Landing;
 
+            _heightAtLandStart = transform.position.y;
+
             _currentDestination = target.position.SetY(WaterSwimHeight);
 
             foreach (FowlMember bird in _flock)
@@ -492,11 +506,9 @@ namespace ColbyO.Untitled.Wildlife
             {
                 foreach (FowlMember bird in _flock)
                 {
-                    bird.GroupOffset = bird.Transform.localPosition.SetY(0.0f);
+                    bird.CurrentAnimatedOffset = bird.Self.transform.localPosition.SetY(0.0f);
                 }
-
                 _currentDestination = _swimmingTargets[Random.Range(0, _swimmingTargets.Count)].position.SetY(WaterSwimHeight);
-
                 _isChangingWaypoint = true;
             }
 
