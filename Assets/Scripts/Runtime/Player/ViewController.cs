@@ -4,50 +4,67 @@ using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.LightTransport;
+using UnityEngine.UIElements;
+using static UnityEngine.Audio.GeneratorInstance;
 
 namespace ColbyO.Untitled.Player
 {
+    public enum PlayerViewType
+    {
+        FirstPerson,
+        ThirdPerson,
+        Fixed
+    }
+
     public class ViewController : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Transform _target;
+        [SerializeField] private Transform _thirdPersonTarget;
         [SerializeField] private Camera _camera;
         [SerializeField] private GameObject _mesh;
+
+        private Transform _target;
 
         [Header("Settings")]
         [SerializeField] private LayerMask _ignoreCameraCollisionMask;
         [SerializeField] private MovementSettings _settings;
 
-        [Header("Orbit")]
-        [SerializeField] private float _thirdPersonDistance = 10f;
-        [SerializeField] private float _firstPersonDistance = 0.1f;
-        [SerializeField, ReadOnly] private float _distance = 10f;
-        [SerializeField] private float _thirdPersonTargetOffset = 0.25f;
+        [Header("Orbit/Distances")]
+        [SerializeField] private float _thirdPersonDistance = 5f;
+        [SerializeField] private float _firstPersonDistance = 0.05f;
+        [SerializeField] private Vector2 _zoomLimits = new Vector2(1f, 10f);
+
+        [Header("Current State (Runtime)")]
+        [SerializeField, ReadOnly] private float _distance = 5f;
         [SerializeField, ReadOnly] private float _targetOffset = 0.25f;
+        [SerializeField, ReadOnly] private PlayerViewType _currentView = PlayerViewType.ThirdPerson;
+
+        [Header("Offsets")]
+        [SerializeField] private float _thirdPersonTargetOffset = 0.25f;
         [SerializeField] private Vector3 _thirdPersonOffset;
-        [SerializeField] private Vector3 _firstPersonOffset = new Vector3(0, -0.6f, 0);
-        [SerializeField, ReadOnly] private Vector3 _offset;
-        [SerializeField] private Vector2 _zoomLimits = new Vector2(3f, 20f);
+        [SerializeField] private Vector3 _firstPersonOffset = new Vector3(0, 0.1f, 0);
         [SerializeField] private float _heightOffset = 1.5f;
+        
+        [SerializeField] private Vector3 _offset;
+
+        [Header("Limits")]
+        [SerializeField] private Vector2 _xLookLimits = new Vector2(-360f, 360f);
 
         private IInputMonoSystem _inputSystem;
-
         private Vector2 _cameraAngle;
-
+        private Vector2 _relativeCameraAngle;
         private bool _isTransitioning = false;
-        
-        private bool _isInFirstPerson = false;
 
         public float Sensitivity => _settings.Sensitivity * (InputDeviceHandler.IsCurrentGamepad ? _settings.ControllerSensitivityScaleFactor : 1f);
 
         private void Awake()
         {
             _inputSystem = GameManager.GetMonoSystem<IInputMonoSystem>();
-            _distance = _thirdPersonDistance;
-            _targetOffset = _thirdPersonTargetOffset;
-            _offset = _thirdPersonOffset;
-
+            ToggleView(PlayerViewType.ThirdPerson);
         }
 
         private void OnEnable()
@@ -57,6 +74,8 @@ namespace ColbyO.Untitled.Player
 
         private void Start()
         {
+            // TODO: In Awake someone is fighting with me on weather the camera is on or not...
+            _camera.gameObject.SetActive(false);
             //_inputSystem.OnUseCamera.AddListener(ToggleFirstPerson);
         }
 
@@ -123,38 +142,69 @@ namespace ColbyO.Untitled.Player
             look.y *= -1;
 
             if (_settings.InvertLookX) look.x *= -1f;
-            if (_settings.InvertLookY && !_isInFirstPerson) look.y *= -1f;
+            if (_settings.InvertLookY && _currentView != PlayerViewType.FirstPerson) look.y *= -1f;
 
-            _cameraAngle.x += look.x * Sensitivity;
-            _cameraAngle.y += look.y * Sensitivity;
+            float deltaX = look.x * Sensitivity;
+            float deltaY = look.y * Sensitivity;
 
-            _cameraAngle.y = Mathf.Clamp(
-                _cameraAngle.y,
-                _settings.YLookLimit.x,
-                _settings.YLookLimit.y
-            );
+            if (_currentView == PlayerViewType.Fixed || _currentView == PlayerViewType.FirstPerson)
+            {
+                _relativeCameraAngle.x += deltaX;
+                _relativeCameraAngle.y += deltaY;
+
+                _relativeCameraAngle.x = Mathf.Clamp(_relativeCameraAngle.x, _xLookLimits.x, _xLookLimits.y);
+                _relativeCameraAngle.y = Mathf.Clamp(_relativeCameraAngle.y, _settings.YLookLimit.x, _settings.YLookLimit.y);
+
+                _cameraAngle.x = _target.eulerAngles.y + _relativeCameraAngle.x;
+                _cameraAngle.y = _target.eulerAngles.x + _relativeCameraAngle.y;
+            }
+            else
+            {
+                _cameraAngle.x += deltaX;
+                _cameraAngle.y += deltaY;
+                _cameraAngle.y = Mathf.Clamp(_cameraAngle.y, _settings.YLookLimit.x, _settings.YLookLimit.y);
+
+                if (_cameraAngle.x > 360f) _cameraAngle.x -= 360f;
+                if (_cameraAngle.x < -360f) _cameraAngle.x += 360f;
+            }
         }
 
         private void UpdateZoom()
         {
-            float scroll = 0;
-            _distance -= scroll;
-            _distance = Mathf.Clamp(_distance, _zoomLimits.x, _zoomLimits.y);
+            if (_currentView != PlayerViewType.ThirdPerson) return;
+
+            //float scroll = 0;
+            //_distance -= scroll;
+            //_distance = Mathf.Clamp(_distance, _zoomLimits.x, _zoomLimits.y);
         }
 
         private void UpdateCamera()
         {
             Quaternion rotation = Quaternion.Euler(_cameraAngle.y, _cameraAngle.x, 0f);
-
             Vector3 direction = rotation * Vector3.back;
 
-            Vector3 targetPos = _target.position + _offset + Vector3.up * _heightOffset + transform.right * _targetOffset;
+            Vector3 targetPos = _target.position + _offset + (Vector3.up * _heightOffset);
+
+            if (_currentView == PlayerViewType.ThirdPerson)
+            {
+                targetPos += transform.right * _targetOffset;
+            }
+
             Vector3 desiredPos = targetPos + direction * _distance;
 
-            Vector3 finalPos = ResolveCameraCollision(targetPos, desiredPos);
+            Vector3 finalPos = (_currentView == PlayerViewType.ThirdPerson)
+                ? ResolveCameraCollision(targetPos, desiredPos)
+                : desiredPos;
 
             transform.position = finalPos;
-            transform.LookAt(targetPos);
+            transform.rotation = rotation;
+        }
+
+        private float ClampAngleRelative(float angle, float baseAngle, float min, float max)
+        {
+            float delta = Mathf.DeltaAngle(baseAngle, angle);
+            delta = Mathf.Clamp(delta, min, max);
+            return baseAngle + delta;
         }
 
         public void LookAt(Transform target, float duration)
@@ -187,6 +237,54 @@ namespace ColbyO.Untitled.Player
             });
         }
 
+        public Promise TransitionView(PlayerViewType targetType, float duration, Vector3? offsetOverride = null, Transform fixedTarget = null)
+        {
+            _isTransitioning = true;
+
+            Transform startTarget = _target;
+            float startDist = _distance;
+            Vector3 startOffset = _offset;
+            float startTargetOffset = _targetOffset;
+
+            Transform endTarget = (targetType == PlayerViewType.Fixed) ? fixedTarget : _thirdPersonTarget;
+            float endDist = (targetType == PlayerViewType.ThirdPerson) ? _thirdPersonDistance : _firstPersonDistance;
+            Vector3 endOffset = offsetOverride ?? ((targetType == PlayerViewType.ThirdPerson) ? _thirdPersonOffset : Vector3.zero);
+            float endTargetOffset = (targetType == PlayerViewType.ThirdPerson) ? _thirdPersonTargetOffset : 0f;
+
+            return GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                duration,
+                (float t) =>
+                {
+                    float alpha = Mathf.SmoothStep(0, 1, t);
+
+                    _distance = Mathf.Lerp(startDist, endDist, alpha);
+                    _offset = Vector3.Lerp(startOffset, endOffset, alpha);
+                    _targetOffset = Mathf.Lerp(startTargetOffset, endTargetOffset, alpha);
+
+                    Vector3 posA = startTarget.position + startOffset + (Vector3.up * _heightOffset);
+
+                    Vector3 posB = endTarget.position + _offset + (Vector3.up * _heightOffset);
+                    if (targetType == PlayerViewType.ThirdPerson)
+                        posB += transform.right * _targetOffset;
+
+                    Vector3 blendedTargetPos = Vector3.Lerp(posA, posB, alpha);
+
+                    Quaternion rotation = Quaternion.Euler(_cameraAngle.y, _cameraAngle.x, 0f);
+                    Vector3 direction = rotation * Vector3.back;
+
+                    transform.SetPositionAndRotation(blendedTargetPos + (direction * _distance), rotation);
+
+                    if (t >= 1f) _target = endTarget;
+                }
+            ).Then(_ =>
+            {
+                _currentView = targetType;
+                _isTransitioning = false;
+                ToggleView(targetType, offsetOverride, null, fixedTarget);
+            });
+        }
+
         public void LookAtPosition(Vector3 position, float duration)
         {
             GameObject temp = new GameObject("TempLookTarget");
@@ -205,27 +303,44 @@ namespace ColbyO.Untitled.Player
             _cameraAngle.y = Mathf.Clamp(_cameraAngle.y, _settings.YLookLimit.x, _settings.YLookLimit.y);
 
         }
-        
-        private void ToggleFirstPerson()
+
+        public void ToggleView(PlayerViewType type, Vector3? offsetOverride = null, Vector2? xLookLimitsOverride = null, Transform fixedTarget = null)
         {
-            _isInFirstPerson = !_isInFirstPerson;
-            if (_isInFirstPerson)
+            _currentView = type;
+            _relativeCameraAngle = Vector2.zero;
+
+            switch (type)
             {
-                GameManager.GetMonoSystem<IUIMonoSystem>().Show<PolaroidView>();
-                _mesh.SetActive(false);
-                _distance = _firstPersonDistance;
-                _targetOffset = 0.0f;
-                _offset = _firstPersonOffset;
-            }
-            else
-            {
-                _mesh.SetActive(true);
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
-                _distance = _thirdPersonDistance;
-                _targetOffset = _thirdPersonTargetOffset;
-                _offset = _thirdPersonOffset;
+                case PlayerViewType.FirstPerson:
+                    _mesh.SetActive(false);
+                    _target = _thirdPersonTarget;
+                    _distance = _firstPersonDistance;
+                    _targetOffset = 0.0f;
+                    _offset = offsetOverride ?? _firstPersonOffset;
+                    _xLookLimits = xLookLimitsOverride ?? new Vector2(-90f, 90f);
+                    _cameraAngle.x = _target.eulerAngles.y;
+                    break;
+
+                case PlayerViewType.Fixed:
+                    _mesh.SetActive(true);
+                    _target = fixedTarget ?? _thirdPersonTarget;
+                    _distance = _firstPersonDistance;
+                    _targetOffset = 0.0f;
+                    _offset = offsetOverride ?? Vector3.zero;
+                    _xLookLimits = xLookLimitsOverride ?? new Vector2(-60f, 60f);
+                    _cameraAngle.x = _target.eulerAngles.y;
+                    _cameraAngle.y = _target.eulerAngles.x;
+                    break;
+
+                case PlayerViewType.ThirdPerson:
+                    _mesh.SetActive(true);
+                    _target = _thirdPersonTarget;
+                    _distance = _thirdPersonDistance;
+                    _targetOffset = _thirdPersonTargetOffset;
+                    _offset = offsetOverride ?? _thirdPersonOffset;
+                    _xLookLimits = new Vector2(-360f, 360f);
+                    break;
             }
         }
-
     }
 }

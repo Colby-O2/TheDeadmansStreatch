@@ -1,5 +1,6 @@
 using ColbyO.Untitled.MonoSystems;
 using InteractionSystem.Interfaces;
+using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using PlazmaGames.Math;
@@ -67,7 +68,7 @@ namespace ColbyO.Untitled.Player
             ApplyGravity();
             UpdateMovement();
             RotateTowardsMovement();
-            MoveController();
+            if (_controller.enabled) MoveController();
         }
 
         private void ToggleSprint()
@@ -156,6 +157,42 @@ namespace ColbyO.Untitled.Player
             _controller.enabled = prev;
         }
 
+        public void TeleportTo(Vector3 loc)
+        {
+            bool prev = _controller.enabled;
+            _controller.enabled = false;
+            transform.position = loc;
+            _controller.enabled = prev;
+        }
+
+        public Promise TransitionTo(Transform target, float duration)
+        {
+            Vector3 startPos = transform.position;
+            Quaternion startRot = transform.rotation;
+
+            bool wasFrozen = _isFrozen;
+            bool prevChacaterControllerState = _controller.enabled;
+            if (!wasFrozen) Freeze();
+            if (prevChacaterControllerState) DisableChacaterController();
+
+            return GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                duration,
+                (float t) =>
+                {
+                    transform.SetPositionAndRotation(
+                        Vector3.Lerp(startPos, target.position, t), 
+                        Quaternion.Slerp(startRot, target.rotation, t)
+                    );
+                }
+            )
+            .Then(_ => 
+            {
+                if (!wasFrozen) Unfreeze();
+                if (prevChacaterControllerState) EnableChacaterController();
+            });
+        }
+
         public void FreezeJustMovement()
         {
             _isFrozen = true;
@@ -185,6 +222,26 @@ namespace ColbyO.Untitled.Player
             UTGameManager.LockMovement = false;
             _isFrozen = false;
             _input.EnableMovement();
+        }
+
+        public void Attach(Transform parnet)
+        {
+            transform.SetParent(parnet);
+        }
+
+        public void Deattach()
+        {
+            transform.SetParent(null);
+        }
+
+        public void DisableChacaterController()
+        {
+            _controller.enabled = false;
+        }
+
+        public void EnableChacaterController()
+        {
+            _controller.enabled = true;
         }
 
         public void SetHorizontalVelocity(Vector3 velocity)

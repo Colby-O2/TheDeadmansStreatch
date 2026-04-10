@@ -14,8 +14,9 @@ namespace ColbyO.Untitled
 
         public static Scheduler GlobalScheduler = new Scheduler();
 
-        public static bool IsPaused = false;
-        public static bool LockMovement = false;
+        public static bool IsPaused { get; set; }
+
+        public static bool LockMovement { get; set; }
 
         public static Player.ViewController PlayerViewController;
         public static Player.MovementController PlayerMoveController;
@@ -25,7 +26,6 @@ namespace ColbyO.Untitled
         private void Awake()
         {
             Application.runInBackground = true;
-            Application.targetFrameRate = 1000;
         }
 
         private void Start()

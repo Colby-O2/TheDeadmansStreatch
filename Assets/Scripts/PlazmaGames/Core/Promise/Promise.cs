@@ -54,19 +54,57 @@ namespace PlazmaGames.Core
             return chained;
         }
 
-        public Promise Then(System.Func<T, Promise> func)
+        public static Promise<U> All<U>(params Promise<U>[] promises)
         {
-            var chained = new Promise();
-            _then = (tValue) =>
-            {
-                Promise p = func(tValue);
-                p?.Then((uValue) =>
-                {
-                    chained.Resolve(uValue);
-                });
-            };
+            Promise<U> combined = new Promise<U>();
 
-            return chained;
+            if (promises == null || promises.Length == 0)
+            {
+                combined.Resolve(default);
+                return combined;
+            }
+
+            int remaining = promises.Length;
+
+            foreach (Promise<U> p in promises)
+            {
+                p.Then(_ =>
+                {
+                    remaining--;
+                    if (remaining <= 0)
+                    {
+                        combined.Resolve(default);
+                    }
+                });
+            }
+
+            return combined;
+        }
+
+        public static Promise All(params Promise[] promises)
+        {
+            Promise combined = new Promise();
+            if (promises == null || promises.Length == 0)
+            {
+                combined.Resolve();
+                return combined;
+            }
+
+            int remaining = promises.Length;
+
+            foreach (Promise p in promises)
+            {
+                p.Then(_ =>
+                {
+                    remaining--;
+                    if (remaining <= 0)
+                    {
+                        combined.Resolve();
+                    }
+                });
+            }
+
+            return combined;
         }
 
         public static Promise CreateExisting(ref Promise value)

@@ -14,6 +14,9 @@ namespace ColbyO.Untitled.MonoSystems
         private InputAction _sprintAction;
         private InputAction _useCameraAction;
 
+        private bool _movementDisabled;
+        private bool _viewDisabled;
+
         public Vector2 RawMovement { get; private set; }
         public Vector2 RawLook { get; private set; }
 
@@ -36,7 +39,11 @@ namespace ColbyO.Untitled.MonoSystems
         private void OnEnable()
         {
             _moveAction.performed   += HandleMoveAction;
+            _moveAction.canceled += HandleMoveAction;
+
             _lookAction.performed   += HandleLookAction;
+            _lookAction.canceled += HandleLookAction;
+
             _sprintAction.performed += HandleSprintAction;
             _sprintAction.canceled  += HandleSprintAction;
             _useCameraAction.performed += HandleUseCameraAction;
@@ -45,7 +52,11 @@ namespace ColbyO.Untitled.MonoSystems
         private void OnDisable()
         {
             _moveAction.performed   -= HandleMoveAction;
+            _moveAction.canceled -= HandleMoveAction;
+
             _lookAction.performed   -= HandleLookAction;
+            _lookAction.canceled -= HandleLookAction;
+
             _sprintAction.performed -= HandleSprintAction;
             _sprintAction.canceled  -= HandleSprintAction;
             _useCameraAction.performed -= HandleUseCameraAction;
@@ -53,11 +64,13 @@ namespace ColbyO.Untitled.MonoSystems
 
         private void HandleMoveAction(InputAction.CallbackContext e)
         {
+            if (_movementDisabled) return;
             RawMovement = e.ReadValue<Vector2>();
         }
 
         private void HandleLookAction(InputAction.CallbackContext e)
         {
+            if (_viewDisabled) return;
             RawLook = e.ReadValue<Vector2>();
         }
 
@@ -75,7 +88,12 @@ namespace ColbyO.Untitled.MonoSystems
         public void EnableMovement(bool justMovement = false)
         {
             _moveAction.Enable();
-            if (!justMovement) _lookAction.Enable();
+            _movementDisabled = false;
+            if (!justMovement)
+            {
+                _viewDisabled = false;
+                _lookAction.Enable();
+            }
         }
 
         public void DisableMovement(bool justMovement = false)
@@ -83,8 +101,14 @@ namespace ColbyO.Untitled.MonoSystems
             RawMovement = Vector2.zero;
             RawLook = Vector2.zero;
 
+            _movementDisabled = true;
+
             _moveAction.Disable();
-            if (!justMovement) _lookAction.Disable();
+            if (!justMovement)
+            {
+                _viewDisabled = true;
+                _lookAction.Disable();
+            }
         }
     }
 }

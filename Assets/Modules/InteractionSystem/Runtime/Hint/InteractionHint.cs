@@ -88,7 +88,7 @@ namespace InteractionSystem.Hint
             UpdateOutline();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             UpdateFade();
             UpdateControls();

@@ -7,7 +7,7 @@ namespace ColbyO.Untitled.MonoSystems
     public interface ICinematicMonoSystem : IMonoSystem
     {
         public void Enable(bool lockMovement = true);
-        public void Disabe();
+        public void Disabe(bool setGlobalLock = true);
         public void MoveTo(string tag, string lookAtTag = "");
         public void MoveTo(Transform loc, Transform lookAt = null, Transform parnet = null);
         public Promise HandleCameraTransition(string fromTag, string toTag, string lookAtTag, float duration);

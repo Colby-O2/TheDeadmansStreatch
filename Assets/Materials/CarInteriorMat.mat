@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CarWheelMzt
+  m_Name: CarInteriorMat
   m_Shader: {fileID: -6465566751694194690, guid: 487a4ae6489a6104391dc2a9d628c0f2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -66,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 65ecd707d710b8641b4a4a8df1d1866b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1b8c91b8263f963489985770d7d127fb, type: 3}
         m_Scale: {x: 100, y: 100}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -127,7 +127,7 @@ Material:
     - _GlossyReflections: 0
     - _HueShift: 0
     - _LIGHTINGMETHOD: 2
-    - _LightnessMultiplier: 1
+    - _LightnessMultiplier: 2
     - _MaxDepth: 2.49
     - _Metallic: 0
     - _OcclusionStrength: 1

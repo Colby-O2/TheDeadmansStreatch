@@ -11,6 +11,11 @@ namespace ColbyO.Untitled.Player
             UTGameManager.PlayerAnimationController = this;
         }
 
+        public void SetFlag(string flag, bool state)
+        {
+            _animator.SetBool(flag, state);
+        }
+
         public void SetWalking(bool state)
         {
             _animator.SetBool("IsWalking", state);

@@ -28,7 +28,11 @@ namespace ColbyO.Untitled
 
             if (newCar.TryGetComponent(out SplineFollower follower))
             {
-                follower.Initialize(_roadSplines, laneIndex, _carSpeed);
+                follower.Initialize(_roadSplines, laneIndex, _carSpeed)
+                .Then(_ =>
+                {
+                    Destroy(newCar);
+                });
             }
         }
     }

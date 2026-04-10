@@ -103,7 +103,7 @@ namespace InteractionSystem.Handlers
                     InspectableSettings settings = profile.Settings.CreateCopy();
                     settings.ReadText = comp.ReadTextOverride;
 
-                    InspectorProfile p = new InspectorProfile(t, new MathExt.Transform(t), settings);
+                    InspectorProfile p = new InspectorProfile(t, MathExt.Transform.FromLocal(t), settings);
                     _profiles.Add(p);
                     t.gameObject.SetActive(false);
                 }
@@ -378,7 +378,7 @@ namespace InteractionSystem.Handlers
 
             for (int i = 0; i < _profiles.Count; i++)
             {
-                _profiles[i].StartTransform.ApplyTo(_profiles[i].Obj);
+                _profiles[i].StartTransform.ApplyToLocal(_profiles[i].Obj);
                 if (!_profiles[i].Obj.gameObject.activeSelf) _profiles[i].Obj.gameObject.SetActive(true);
             }
             _profiles.Clear();

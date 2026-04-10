@@ -15,8 +15,6 @@ namespace ColbyO.Untitled.UI
 
         public override void Init()
         {
-            if (_playerCamera && _playerCamera.activeSelf) _playerCamera.SetActive(false);
-
             _play.onPointerDown.AddListener(Play);
             _settings.onPointerDown.AddListener(Settings);
             _quit.onPointerDown.AddListener(Quit);
@@ -25,15 +23,24 @@ namespace ColbyO.Untitled.UI
         public override void Show()
         {
             base.Show();
+            UTGameManager.LockMovement = true;
             UTGameManager.ShowCursor();
         }
 
         private void Play()
         {
-            if (_mainMenuCamera && _mainMenuCamera.activeSelf) _mainMenuCamera.SetActive(false);
-            if (_playerCamera && !_playerCamera.activeSelf) _playerCamera.SetActive(true);
             UTGameManager.HideCursor();
-            GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>();
+            GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(3f)
+            .Then(_ =>
+            {
+                _mainMenuCamera.SetActive(false);
+                _playerCamera.SetActive(true);
+
+                GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeIn(5f);
+
+                GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>();
+                GameManager.GetMonoSystem<IGameLogicMonoSystem>().TriggerEvent("Act1");
+            });
         }
 
         private void Settings()

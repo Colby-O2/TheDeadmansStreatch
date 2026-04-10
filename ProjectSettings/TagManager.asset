@@ -15,6 +15,12 @@ TagManager:
   - FowlFlightArea
   - Water
   - TrafficLanes
+  - Act1_PlayerCarDriverSeatLoc
+  - Act1_PlayerCarController
+  - Act1_PlayerCarCameraTarget
+  - Act1_PlayerCarMirrorCamera
+  - Act1_PlayerCarDoor
+  - Act1_GetOutOfCarLoc
   layers:
   - Default
   - TransparentFX

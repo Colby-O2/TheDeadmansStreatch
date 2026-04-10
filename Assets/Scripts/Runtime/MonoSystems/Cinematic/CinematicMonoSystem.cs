@@ -26,7 +26,7 @@ namespace ColbyO.Untitled.MonoSystems
 
             _cinematicView = GameObject.FindWithTag("CinematicView");
 
-            Disabe();
+            Disabe(false);
         }
 
         public void Enable(bool lockMovement = true)
@@ -37,7 +37,7 @@ namespace ColbyO.Untitled.MonoSystems
             UTGameManager.LockMovement = lockMovement;
         }
 
-        public void Disabe()
+        public void Disabe(bool setGlobalLock = true)
         {
             if (_cinematicCamera && _cinematicCamera.gameObject.activeSelf)
             {
@@ -46,7 +46,7 @@ namespace ColbyO.Untitled.MonoSystems
             }
             if (_cinematicView != null && _cinematicView.activeSelf) _cinematicView.SetActive(false);
 
-            UTGameManager.LockMovement = false;
+            if (setGlobalLock) UTGameManager.LockMovement = false;
         }
 
         private Transform GetCameraLocation(string tag)

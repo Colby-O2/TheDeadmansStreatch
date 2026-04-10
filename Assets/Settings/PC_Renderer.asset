@@ -88,7 +88,7 @@ MonoBehaviour:
   _outlineLayer:
     serializedVersion: 2
     m_Bits: 1280
-  _maskMaterial: {fileID: 0}
+  _maskMaterial: {fileID: 2100000, guid: 3e742d8862901754bad229e79286f76a, type: 2}
   _renderEvent: 550
   _outlineColor: {r: 3.0943396, g: 3.0943396, b: 3.0943396, a: 1}
   _thickness: 1

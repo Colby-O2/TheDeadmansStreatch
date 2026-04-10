@@ -54,7 +54,7 @@ namespace ColbyO.Untitled.MonoSystems
 
         protected override void DisabeCinematicCamera()
         {
-            GameManager.GetMonoSystem<ICinematicMonoSystem>().Disabe();
+            GameManager.GetMonoSystem<ICinematicMonoSystem>().Disabe(false);
         }
 
         protected override void MoveCinematicCamera(Transform loc, Transform lookAt, Transform parnet)
@@ -83,7 +83,7 @@ namespace ColbyO.Untitled.MonoSystems
         public override void OnDialogueFinished()
         {
             UTGameManager.LockMovement = false;
-            GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+            GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>();
         }
 
         private void SelectedChoice(int choice)

@@ -1,3 +1,4 @@
+using PlazmaGames.Core;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -12,16 +13,22 @@ namespace ColbyO.Untitled
         private int _splineIndex;
         private float _splineLength;
 
-        public void Initialize(SplineContainer spline, int index, float moveSpeed)
+        private Promise _promise;
+
+        public Promise Initialize(SplineContainer spline, int index, float moveSpeed)
         {
             _targetSpline = spline;
             _speed = moveSpeed;
             _splineIndex = index;
 
             _splineLength = _targetSpline.CalculateLength();
+
+            Promise.CreateExisting(ref _promise);
+
+            return _promise;
         }
 
-        void Update()
+        private void Update()
         {
             if (_targetSpline == null) return;
 
@@ -39,7 +46,8 @@ namespace ColbyO.Untitled
 
             if (t >= 1f)
             {
-                Destroy(gameObject);
+                Promise.ResolveExisting(ref _promise);
+                //Destroy(gameObject);
             }
         }
     }

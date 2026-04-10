@@ -169,38 +169,31 @@ namespace ColbyO.Untitled.UI
 
         private IEnumerator TypewriterRoutine(string text)
         {
-            if (_isPassive) 
-            {
-                _dialogueText.text = text;
-            }
-            else
-            {
-                _isTyping = true;
-                _dialogueText.text = "";
-                int visibleCharacters = 0;
+            _isTyping = true;
+            _dialogueText.text = "";
+            int visibleCharacters = 0;
 
-                while (visibleCharacters < text.Length)
+            while (visibleCharacters < text.Length)
+            {
+                while (UTGameManager.IsPaused)
                 {
-                    while (UTGameManager.IsPaused)
-                    {
-                        yield return null;
-                    }
-
-                    if (text[visibleCharacters] == '<')
-                    {
-                        int endTag = text.IndexOf('>', visibleCharacters);
-                        if (endTag != -1) visibleCharacters = endTag + 1;
-                    }
-                    else
-                    {
-                        visibleCharacters++;
-                    }
-
-                    _dialogueText.text = text.Substring(0, visibleCharacters);
-                    yield return new WaitForSeconds(_typeSpeed);
+                    yield return null;
                 }
+
+                if (text[visibleCharacters] == '<')
+                {
+                    int endTag = text.IndexOf('>', visibleCharacters);
+                    if (endTag != -1) visibleCharacters = endTag + 1;
+                }
+                else
+                {
+                    visibleCharacters++;
+                }
+
+                _dialogueText.text = text.Substring(0, visibleCharacters);
+                yield return new WaitForSeconds(_typeSpeed);
             }
-            
+
             CompleteTyping();
         }
 
