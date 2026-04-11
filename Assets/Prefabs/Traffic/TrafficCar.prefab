@@ -539,7 +539,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -548,7 +548,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 50
+  MaxDistance: 75
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -662,8 +662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c133b8e9dfee4e46936b27649ef83b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.Traffic.EngineSound
-  _freqScale: 1
-  _baseDuty: 150
+  _freqScale: 1.2
+  _baseDuty: 200
   _throttleDuty: 50
   _waves:
   - volume: 1
@@ -715,7 +715,7 @@ MonoBehaviour:
     baseDuty: 0
     throttleDutyScale: 0
   engineOn: 1
-  _rpmLerpSpeed: 20
+  _rpmLerpSpeed: 100
 --- !u!1 &3046824709281509445
 GameObject:
   m_ObjectHideFlags: 0

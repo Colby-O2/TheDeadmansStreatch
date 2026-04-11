@@ -116,11 +116,12 @@ namespace ColbyO.Untitled.MonoSystems
                     Refs.CameraInteractable.GetAction<TakeAction>().IsEnabled = false;
 
                     Refs.PlayerCarAudio.SetRpmAndThrottle(250f, 0f);
+                    Refs.PlayerCarAudio.ToggleEngine(true);
 
                     Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 2, 30f)
                     .Then(_ =>
                     {
-                        Refs.PlayerCarAudio.SetRpmAndThrottle(0f, 0f);
+                        Refs.PlayerCarAudio.ToggleEngine(false);
                         UTGameManager.PlayerAnimationController.SetFlag("IsParked", true);
                         foreach (GameObject cam in Refs.PlayerCarMirrorCameras) cam.SetActive(false);
 

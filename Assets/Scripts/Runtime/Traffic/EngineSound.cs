@@ -94,6 +94,11 @@ namespace ColbyO.Untitled.Traffic
             JsEngineSoundSetRpmAndThrottle(_rpm, _throttle);
 #endif
         }
+        
+        public void ToggleEngine(bool enabled)
+        {
+            engineOn = enabled;
+        }
 
 
 #if PLATFORM_WEBGL && !UNITY_EDITOR
