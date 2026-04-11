@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0ada48a0f4b2b46bb5f1a3f117886a, type: 3}
   m_Name: MallardSettings
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.FowlSettings
-  SpeciesName: Mallard
+  Species: 1
   FowlPrefabs:
   - {fileID: 1089043320779577209, guid: 396817bcc0ceaa94c86b3bae732975b9, type: 3}
   - {fileID: 8687707466502208594, guid: 0dcf29f894c39d24899ff4ec7ebd2cfd, type: 3}

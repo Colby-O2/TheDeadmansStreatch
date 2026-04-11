@@ -11,6 +11,8 @@ namespace ColbyO.Untitled.Traffic
         [SerializeField] private int _hairIdx;
         [SerializeField] private int _coatIdx;
 
+        [SerializeField] private EngineSound _engine;
+
         private void Awake()
         {
             if (_components != null)
@@ -24,14 +26,22 @@ namespace ColbyO.Untitled.Traffic
                     _components[i].MesnRenderer.materials[_components[i].MaterialIdx].SetFloat("_LightnessMultiplier", lightnessShift);
                 }
 
-                // Driver Coat
-                _driver.materials[_coatIdx].SetFloat("_HueShift", Random.Range(-1.0f, 1.0f));
-                _driver.materials[_coatIdx].SetFloat("_LightnessMultiplier", Random.Range(0.5f, 2.0f));
+                if (_driver != null)
+                {
+                    // Driver Coat
+                    _driver.materials[_coatIdx].SetFloat("_HueShift", Random.Range(-1.0f, 1.0f));
+                    _driver.materials[_coatIdx].SetFloat("_LightnessMultiplier", Random.Range(0.5f, 2.0f));
 
-                // Driver Hair
-                _driver.materials[_hairIdx].SetFloat("_HueShift", Random.Range(0.0f, 0.12f));
-                _driver.materials[_hairIdx].SetFloat("_LightnessMultiplier", Random.Range(0.5f, 2.0f));
+                    // Driver Hair
+                    _driver.materials[_hairIdx].SetFloat("_HueShift", Random.Range(0.0f, 0.12f));
+                    _driver.materials[_hairIdx].SetFloat("_LightnessMultiplier", Random.Range(0.5f, 2.0f));
+                }
             }
+        }
+
+        private void Start()
+        {
+            if (_engine) _engine.SetRpmAndThrottle(250f, 0f);
         }
 
         [System.Serializable]

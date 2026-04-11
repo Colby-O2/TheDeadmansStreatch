@@ -4,11 +4,17 @@ using UnityEngine;
 
 namespace ColbyO.Untitled
 {
+    public enum FowlSpecies
+    {
+        CanadaGoose,
+        Mallard
+    }
+
     [CreateAssetMenu(fileName = "FowlSettings", menuName = "Wildlife/Fowl Settings")]
     public class FowlSettings : ScriptableObject
     {
         [Header("General Settings")]
-        public string SpeciesName;
+        public FowlSpecies Species;
         public List<Fowl> FowlPrefabs;
         public Vector2Int FlockSize = new Vector2Int(6, 17);
         public float MoveSpeed = 15f;

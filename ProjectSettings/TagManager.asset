@@ -21,6 +21,7 @@ TagManager:
   - Act1_PlayerCarMirrorCamera
   - Act1_PlayerCarDoor
   - Act1_GetOutOfCarLoc
+  - Act1_CameraInteractable
   layers:
   - Default
   - TransparentFX

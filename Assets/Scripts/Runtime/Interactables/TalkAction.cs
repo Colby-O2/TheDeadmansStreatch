@@ -9,13 +9,14 @@ namespace ColbyO.Untitled.Interactables
     [System.Serializable]
     public class TalkAction : InteractionAction
     {
+        [SerializeField] private string _actionName = "Talk";
         [SerializeField] private string DialogueName;
         [SerializeField] private bool _isSingleUse;
         [SerializeField] private bool _isPassive;
 
         private Promise _promise;
 
-        public override string ActionName => "Talk";
+        public override string ActionName => _actionName;
 
         public override void Execute(InteractorController interactor)
         {

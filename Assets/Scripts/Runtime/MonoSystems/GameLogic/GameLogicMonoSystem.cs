@@ -1,4 +1,5 @@
 using ColbyO.Untitled.Player;
+using ColbyO.Untitled.Traffic;
 using InteractionSystem;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
@@ -24,8 +25,11 @@ namespace ColbyO.Untitled.MonoSystems
             public static Transform PlayerCarDriverSeatLoc;
             public static Transform PlayerCarCameraTarget;
             public static SplineFollower PlayerCarController;
-            public static Interactable PlayerCarDoor;
+            public static EngineSound PlayerCarAudio;
             public static List<GameObject> PlayerCarMirrorCameras = new List<GameObject>();
+
+            public static Interactable PlayerCarDoor;
+            public static Interactable CameraInteractable;
 
             public static SplineContainer TrafficSpline;
 
@@ -50,10 +54,15 @@ namespace ColbyO.Untitled.MonoSystems
             _dialogueMs = GameManager.GetMonoSystem<IDialogueMonoSystem>();
 
             Refs.PlayerCarDriverSeatLoc = GameObject.FindWithTag("Act1_PlayerCarDriverSeatLoc").transform;
-            Refs.PlayerCarController = GameObject.FindWithTag("Act1_PlayerCarController").GetComponent<SplineFollower>();
             Refs.PlayerCarCameraTarget = GameObject.FindWithTag("Act1_PlayerCarCameraTarget").transform;
-            Refs.PlayerCarDoor = GameObject.FindWithTag("Act1_PlayerCarDoor").GetComponent<Interactable>();
+
+            GameObject playerCar = GameObject.FindWithTag("Act1_PlayerCarController");
+            Refs.PlayerCarController = playerCar.GetComponent<SplineFollower>();
+            Refs.PlayerCarAudio = playerCar.GetComponent<EngineSound>();
             GameObject.FindGameObjectsWithTag("Act1_PlayerCarMirrorCamera", Refs.PlayerCarMirrorCameras);
+
+            Refs.PlayerCarDoor = GameObject.FindWithTag("Act1_PlayerCarDoor").GetComponent<Interactable>();
+            Refs.CameraInteractable = GameObject.FindWithTag("Act1_CameraInteractable").GetComponent<Interactable>();
 
             Refs.TrafficSpline = GameObject.FindWithTag("TrafficLanes").GetComponent<SplineContainer>();
 
@@ -98,15 +107,31 @@ namespace ColbyO.Untitled.MonoSystems
                     UTGameManager.PlayerAnimationController.SetFlag("InDriverSeat", true);
                     UTGameManager.PlayerAnimationController.SetFlag("IsParked", false);
 
+                    UTGameManager.PlayerWalkingAudio.Enabled = false;
+                    UTGameManager.GetMonoSystem<IInventoryMonoSystem>().TakeItem("Camera");
+
                     Refs.PlayerCarDoor.CanInteract = false;
+                    Refs.CameraInteractable.CanInteract = true;
+                    Refs.CameraInteractable.gameObject.SetActive(true);
+                    Refs.CameraInteractable.GetAction<TakeAction>().IsEnabled = false;
+
+                    Refs.PlayerCarAudio.SetRpmAndThrottle(250f, 0f);
 
                     Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 2, 30f)
                     .Then(_ =>
                     {
+                        Refs.PlayerCarAudio.SetRpmAndThrottle(0f, 0f);
                         UTGameManager.PlayerAnimationController.SetFlag("IsParked", true);
                         foreach (GameObject cam in Refs.PlayerCarMirrorCameras) cam.SetActive(false);
 
-                        return GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise("Act1_Arrival", passive: true);
+                        Promise dialoguePromise = GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise("Act1_Arrival", passive: true);
+
+                        return dialoguePromise;
+                    })
+                    .Then(_ =>
+                    {
+                        Refs.CameraInteractable.GetAction<TakeAction>().IsEnabled = true;
+                        return _scheduler.When(() => GameManager.GetMonoSystem<IInventoryMonoSystem>().HasItem("Camera"));
                     })
                     .Then(_ =>
                     {
@@ -128,6 +153,7 @@ namespace ColbyO.Untitled.MonoSystems
                     })
                     .Then(_ =>
                     {
+                        UTGameManager.PlayerWalkingAudio.Enabled = true;
                         UTGameManager.PlayerMoveController.Deattach();
                         UTGameManager.PlayerMoveController.UnfreezeJustMovement();
                         UTGameManager.PlayerMoveController.EnableChacaterController();

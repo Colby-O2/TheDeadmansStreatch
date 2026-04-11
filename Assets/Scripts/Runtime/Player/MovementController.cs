@@ -55,6 +55,7 @@ namespace ColbyO.Untitled.Player
         private void OnEnable()
         {
             UTGameManager.PlayerMoveController = this;
+            UTGameManager.PlayerWalkingAudio = GetComponent<WalkingSound>();
         }
 
         private void Update()

@@ -15,6 +15,9 @@ namespace InteractionSystem
         [SerializeField] private string _objectName;
         [SerializeField] private bool _isInteractable = true;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource _as;
+
         [Header("Interaction Slots")]
         [SerializeReference] private InteractionAction[] _actions = new InteractionAction[4];
 
@@ -70,7 +73,15 @@ namespace InteractionSystem
         {
             if (!IsInteractable) return;
             if (actionIndex < 0 || actionIndex >= _actions.Length) return;
-            if (_actions[actionIndex] != null && _actions[actionIndex].CanExecute()) _actions[actionIndex].Execute(interactor);
+            if (_actions[actionIndex] != null && _actions[actionIndex].CanExecute())
+            {
+                if (_as && _actions[actionIndex].Clip != null)
+                {
+                    Debug.Log("Yo!");
+                    _as.PlayOneShot(_actions[actionIndex].Clip);
+                }
+                _actions[actionIndex].Execute(interactor);
+            }
             _hint.Set(_objectName, _actions);
         }
 

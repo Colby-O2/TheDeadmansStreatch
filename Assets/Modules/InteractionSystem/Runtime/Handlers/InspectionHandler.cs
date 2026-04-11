@@ -392,6 +392,7 @@ namespace InteractionSystem.Handlers
                 if (!_profiles[i].Obj.gameObject.activeSelf) _profiles[i].Obj.gameObject.SetActive(true);
             }
             _profiles.Clear();
+            _currentProfile.StartTransform.ApplyToLocal(_currentProfile.Obj);
             _currentProfile = null;
             _currentProfileIndex = -1;
 

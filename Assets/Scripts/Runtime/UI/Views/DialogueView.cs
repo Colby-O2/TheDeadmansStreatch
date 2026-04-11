@@ -34,6 +34,9 @@ namespace ColbyO.Untitled.UI
         [SerializeField] private InputAction _nextAction;
         [SerializeField] private List<InputAction> _choiceActions;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource _as;
+
         private Coroutine _typeRoutine;
 
         [Header("Debugging")]
@@ -121,7 +124,11 @@ namespace ColbyO.Untitled.UI
             _dialogueHolder.SetActive(true);
             _dialogueHint.SetActive(false);
 
-            if (_typeRoutine != null) StopCoroutine(_typeRoutine);
+            if (_typeRoutine != null)
+            {
+                if (_as && _as.isPlaying) _as.Stop();
+                StopCoroutine(_typeRoutine);
+            }
             _typeRoutine = StartCoroutine(TypewriterRoutine(message));
         }
 
@@ -173,12 +180,18 @@ namespace ColbyO.Untitled.UI
             _dialogueText.text = "";
             int visibleCharacters = 0;
 
+            if (_as) _as.Play();
+
             while (visibleCharacters < text.Length)
             {
                 while (UTGameManager.IsPaused)
                 {
+                    if (_as) _as.Pause();
                     yield return null;
+                    continue;
                 }
+
+                if (_as && !_as.isPlaying) _as.UnPause();
 
                 if (text[visibleCharacters] == '<')
                 {
@@ -194,6 +207,9 @@ namespace ColbyO.Untitled.UI
                 yield return new WaitForSeconds(_typeSpeed);
             }
 
+
+            if (_as) _as.Stop();
+
             CompleteTyping();
         }
 
@@ -208,7 +224,7 @@ namespace ColbyO.Untitled.UI
         private void CompleteTyping()
         {
             if (_typeRoutine != null) StopCoroutine(_typeRoutine);
-
+            if (_as && _as.isPlaying) _as.Stop();
             _dialogueText.text = _fullCurrentMessage;
             _isTyping = false;
             _isWaitingForInput = true;
@@ -221,6 +237,7 @@ namespace ColbyO.Untitled.UI
 
             if (_isTyping)
             {
+                if (_as && _as.isPlaying) _as.Stop();
                 CompleteTyping();
             }
             else if (_isWaitingForInput)

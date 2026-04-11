@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 namespace InteractionSystem.Actions
 {
     [System.Serializable]
-    public sealed class InspectAction : InteractionAction
+    public class InspectAction : InteractionAction
     {
         [SerializeField] private string _actionNameOverride;
         [SerializeField] private InspectableSettings _settings;
@@ -29,7 +29,7 @@ namespace InteractionSystem.Actions
 
         public override void Execute(InteractorController interactor)
         {
-            _profile = new InspectorProfile(_owner.transform, new MathExt.Transform(_owner.transform), _settings);
+            _profile = new InspectorProfile(_owner.transform, MathExt.Transform.FromLocal(_owner.transform), _settings);
             interactor.GetInspectorHandler().Inspect(interactor.GetCameraTransform(), _profile);
         }
     }

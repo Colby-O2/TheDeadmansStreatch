@@ -25,6 +25,7 @@ namespace ColbyO.Untitled
             Vector3 startPos = _roadSplines.EvaluatePosition(laneIndex, 0f);
 
             GameObject newCar = Instantiate(_carPrefab, startPos, Quaternion.identity);
+            newCar.transform.SetParent(transform);
 
             if (newCar.TryGetComponent(out SplineFollower follower))
             {

@@ -21,6 +21,7 @@ namespace ColbyO.Untitled
         public static Player.ViewController PlayerViewController;
         public static Player.MovementController PlayerMoveController;
         public static Player.AnimationController PlayerAnimationController;
+        public static WalkingSound PlayerWalkingAudio;
         public static InteractorController PlayerInteractiorController;
 
         private void Awake()

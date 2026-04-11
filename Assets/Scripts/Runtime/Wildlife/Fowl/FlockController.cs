@@ -9,6 +9,7 @@ namespace ColbyO.Untitled.Wildlife
     {
         [Header("References")]
         [SerializeField]  private FlockLifecycleHook _lifecycleHook;
+        [SerializeField] private FlockAudio _audio;
 
         [Header("State")]
         [SerializeField, ReadOnly] private FowlState _currentState = FowlState.Flying;
@@ -63,6 +64,8 @@ namespace ColbyO.Untitled.Wildlife
             _waterPlane = waterPlane;
             _currentState = FowlState.None;
             _flightArea = flightArea;
+
+            _audio.SetSpecies(_settings.Species);
 
             _flightBounds = _flightArea.bounds;
             _flightBounds.Expand(new Vector3(_margin * 2.1f, 100f, _margin * 2.1f));

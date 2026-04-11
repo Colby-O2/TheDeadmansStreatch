@@ -7,6 +7,8 @@ namespace InteractionSystem.Actions
     {
         protected Interactable _owner;
 
+        public AudioClip Clip;
+
         public virtual bool IsEnabled { get; set; }
 
         public abstract string ActionName { get; }

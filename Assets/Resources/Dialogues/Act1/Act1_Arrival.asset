@@ -37,13 +37,36 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: afc5b163-bb1e-4cc9-b52f-b693ccda90e8
-  - Guid: afc5b163-bb1e-4cc9-b52f-b693ccda90e8
+  - Guid: 1c46554a-36bc-4469-b23f-fb2c18af9403
     ActorName: Iris
     GroupName: 
     Type: 1
-    Text: I have arrived!
+    Text: "<i>Should\u2019ve checked the weather before coming out. But my camera
+      should be fine.</i>"
     EventID: 
-    position: {x: 305, y: -20}
+    position: {x: 675, y: -9}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 92010bb7-37c6-47a7-a6b0-c07c2b8f3f20
+  - Guid: 92010bb7-37c6-47a7-a6b0-c07c2b8f3f20
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: <i>I've got to rember to take the camera before I leave. last time I saw
+      a pair of Snowbunting and I left my damm camera in the car. </i>
+    EventID: 
+    position: {x: 1098, y: -5}
     PropertyType: 
     PropertyBooleanValue: 0
     PropertyIntValue: 0
@@ -58,5 +81,26 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 
+  - Guid: afc5b163-bb1e-4cc9-b52f-b693ccda90e8
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: "<i>Deadman\u2019s Peak\u2026 yeah. Great name.</i>"
+    EventID: 
+    position: {x: 267, y: -3}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 1c46554a-36bc-4469-b23f-fb2c18af9403
   Groups: []
   Properties: []

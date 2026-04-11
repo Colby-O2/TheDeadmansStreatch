@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7112481787883117657}
   - component: {fileID: 7961729853500704236}
   - component: {fileID: 2674722020650242799}
+  - component: {fileID: 4554775526434034688}
   m_Layer: 0
   m_Name: Flock
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.Wildlife.FowlController
   _lifecycleHook: {fileID: 2674722020650242799}
+  _audio: {fileID: 4554775526434034688}
   _currentState: 1
   _waterPlane: {fileID: 0}
 --- !u!114 &2674722020650242799
@@ -60,3 +62,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b4c5e46d649ac44bce85b27b5e541c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.Wildlife.FlockLifecycleHook
+--- !u!114 &4554775526434034688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3945091657992609586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3982b1c6018a7e641b12170cd6fba412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.Wildlife.FlockAudio
+  _gooseClips:
+  - {fileID: 8300000, guid: 1ac669371baafc6478a4b4e2bff15b24, type: 3}
+  - {fileID: 8300000, guid: 2493ee931013f9b489c2121065378379, type: 3}
+  - {fileID: 8300000, guid: 9c66b29770fb7c6429eab0fc08cfb337, type: 3}
+  - {fileID: 8300000, guid: 45ae143eafb8503428469448dd1f398f, type: 3}
+  _duckClips:
+  - {fileID: 8300000, guid: eda112499a4608c4ca93aa44092cf0b6, type: 3}
+  - {fileID: 8300000, guid: 0c718dcf75929614abc9c7bc6fe2d153, type: 3}
+  - {fileID: 8300000, guid: eab796100b22fca40a77fb373c0d2e2b, type: 3}
+  - {fileID: 8300000, guid: 7cf56171c101b0a46aa871337cb4c136, type: 3}
+  _species: 0
+  _timeRange: {x: 1, y: 8}
+  _minPitch: 0.8
+  _maxPitch: 1.2
+  _spatialBlend: 1
+  _rolloffMode: 2
+  _minDistance: 1
+  _maxDistance: 50
+  _customRolloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0020141602
+      value: 0.9976196
+      inSlope: -2.5562775
+      outSlope: -2.5562775
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.28229833
+      value: 0.2811355
+      inSlope: -0.7468697
+      outSlope: -0.7468697
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.09148901
+    - serializedVersion: 3
+      time: 0.9900794
+      value: -0.0000069753733
+      inSlope: -0.3972167
+      outSlope: -0.3972167
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
