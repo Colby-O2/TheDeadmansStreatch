@@ -245,6 +245,7 @@ namespace ColbyO.Untitled.MonoSystems
                     .Then(_ =>
                     {
                         Refs.SightingScene.PlayGunshot();
+                        GameManager.GetMonoSystem<IFowlMonoSystem>().ForceAllToFlyOff();
                         UTGameManager.PlayerViewController.ToggleFirstPerson(false);
                     })
                     .Then(_ => _scheduler.Wait(0.4f))

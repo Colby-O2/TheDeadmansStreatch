@@ -6,6 +6,7 @@ namespace ColbyO.Untitled.MonoSystems
 {
     public interface IFowlMonoSystem : IMonoSystem
     {
-        List<FlockController> GetFlocks();
+        public List<FlockController> GetFlocks();
+        public void ForceAllToFlyOff();
     }
 }

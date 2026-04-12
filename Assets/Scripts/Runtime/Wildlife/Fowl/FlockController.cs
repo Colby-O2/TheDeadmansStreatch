@@ -154,7 +154,7 @@ namespace ColbyO.Untitled.Wildlife
             }
         }
 
-        private void TransitionToTakeoff()
+        public void TransitionToTakeoff()
         {
             _currentState = FowlState.Takeoff;
 

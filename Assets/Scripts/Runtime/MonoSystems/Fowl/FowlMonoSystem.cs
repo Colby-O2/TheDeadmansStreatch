@@ -58,6 +58,17 @@ namespace ColbyO.Untitled.MonoSystems
             }
         }
 
+        public void ForceAllToFlyOff()
+        {
+            foreach (FlockController flock in _activeFlocks)
+            {
+                if (flock.State == FowlState.Swimming)
+                {
+                    flock.TransitionToTakeoff();
+                }
+            }
+        }
+
         private void InitalizeFlockPool()
         {
             for (int i = 0; i < _maxFlocks; i++)
