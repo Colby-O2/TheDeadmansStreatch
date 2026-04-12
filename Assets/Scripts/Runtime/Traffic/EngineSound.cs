@@ -119,13 +119,10 @@ namespace ColbyO.Untitled.Traffic
         {
             if (!engineOn) return;
 
-            // Iterate through the buffer, jumping by the number of channels
             for (int i = 0; i < data.Length; i += channels)
             {
-                // 1. Calculate the engine sound ONCE for this moment in time
                 float v = Process();
 
-                // 2. Assign that same value to every channel (Left, Right, etc.)
                 for (int j = 0; j < channels; j++)
                 {
                     data[i + j] = v;
