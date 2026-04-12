@@ -1,4 +1,6 @@
 using ColbyO.Untitled.UI;
+using InteractionSystem.Controls;
+using InteractionSystem.UI;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
@@ -9,6 +11,30 @@ namespace ColbyO.Untitled
     {
         [SerializeField] private Camera _playerCamera;
         [SerializeField] private Camera _polaroidCamera;
+
+        [SerializeField] private UIIcon _takePhotoHint;
+        [SerializeField] private UIIcon _closeHint;
+        [SerializeField] private UIIcon _zoomHint;
+        [SerializeField] private GameObject _zoomHint2;
+
+        private void Update()
+        {
+            if (_zoomHint.IsActive())
+            {
+                _zoomHint.UpdateIconMaterial();
+                _zoomHint2.SetActive(InputDeviceHandler.IsCurrentGamepad);
+            }
+
+            if (_takePhotoHint.IsActive())
+            {
+                _takePhotoHint.UpdateIconMaterial();
+            }
+
+            if (_closeHint.IsActive())
+            {
+                _closeHint.UpdateIconMaterial();
+            }
+        }
 
         public override void Init()
         {
