@@ -25,6 +25,8 @@ namespace ColbyO.Untitled.MonoSystems
 
         private List<Transform> _swimmingTargets = new List<Transform>();
 
+        public List<FlockController> GetFlocks() => _activeFlocks;
+
         private void Start()
         {
             _globalFlightArea = GameObject.FindWithTag("FowlFlightArea").GetComponent<BoxCollider>();

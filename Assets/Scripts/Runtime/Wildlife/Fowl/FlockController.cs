@@ -1,6 +1,7 @@
 using PlazmaGames.Attribute;
 using PlazmaGames.Math;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ColbyO.Untitled.Wildlife
@@ -31,6 +32,11 @@ namespace ColbyO.Untitled.Wildlife
         private float _waitTime;
         private float _elapsedTimeSinceMove;
         private float _heightAtLandStart;
+
+        public List<Fowl> GetFowls()
+        {
+            return _flock.Select(f => f.Self).ToList();
+        }
 
         private void Update()
         {
@@ -91,6 +97,7 @@ namespace ColbyO.Untitled.Wildlife
                 if (init)
                 {
                     Fowl fowl = Instantiate<Fowl>(_settings.FowlPrefabs[Random.Range(0, _settings.FowlPrefabs.Count)], Vector3.zero, Quaternion.identity, this.transform);
+                    fowl.Species = _settings.Species;
 
                     fowl.Show(State);
 

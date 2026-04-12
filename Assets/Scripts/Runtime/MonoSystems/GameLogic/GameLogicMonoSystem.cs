@@ -183,6 +183,6 @@ namespace ColbyO.Untitled.MonoSystems
 
         private bool IsTriggered(string triggerName) => _triggers.Remove(triggerName);
 
-        private bool IsInRange(string rangeName) => _inRange.Contains(rangeName);
+        public bool IsInRange(string rangeName) => _inRange.Contains(rangeName);
     }
 }
