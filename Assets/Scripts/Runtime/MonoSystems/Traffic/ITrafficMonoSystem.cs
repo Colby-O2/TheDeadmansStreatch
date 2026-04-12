@@ -4,5 +4,6 @@ namespace ColbyO.Untitled
 {
     public interface ITrafficMonoSystem : IMonoSystem
     {
+        public void DisableLeftLane(bool state);
     }
 }

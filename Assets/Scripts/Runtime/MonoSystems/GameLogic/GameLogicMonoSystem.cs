@@ -164,9 +164,12 @@ namespace ColbyO.Untitled.MonoSystems
                     Refs.SerialKillerEngine.SetRpmAndThrottle(250f, 0f);
                     Refs.SerialKillerEngine.ToggleEngine(false);
 
-                    Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 2, 30f)
+                    GameManager.GetMonoSystem<ITrafficMonoSystem>().DisableLeftLane(true);
+
+                    Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 2, 10f)
                     .Then(_ =>
                     {
+                        GameManager.GetMonoSystem<ITrafficMonoSystem>().DisableLeftLane(false);
                         Refs.PlayerCarAudio.ToggleEngine(false);
                         UTGameManager.PlayerAnimationController.SetFlag("IsParked", true);
                         foreach (GameObject cam in Refs.PlayerCarMirrorCameras) cam.SetActive(false);
@@ -252,6 +255,7 @@ namespace ColbyO.Untitled.MonoSystems
                     })
                     .Then(_ =>
                     {
+                        GameManager.GetMonoSystem<ITrafficMonoSystem>().DisableLeftLane(true);
                         UTGameManager.PlayerWalkingAudio.Enabled = false;
                         UTGameManager.PlayerMoveController.Freeze();
                         Promise playerMovePromise = UTGameManager.PlayerMoveController.TransitionTo(Refs.PlayerCarDriverSeatLoc, 1f);
@@ -395,8 +399,8 @@ namespace ColbyO.Untitled.MonoSystems
                     });
 
                     return Promise.All(
-                        Refs.PlayerSplineFollower.Initialize(Refs.EndingPath, 1, 4f, startDst: 0.05f),
-                        Refs.KillerSplineFollower.Initialize(Refs.EndingPath, 1, 4f, startDst: 0f, endDist: 0.975f)
+                        Refs.PlayerSplineFollower.Initialize(Refs.EndingPath, 1, 4f, startT: 0.05f),
+                        Refs.KillerSplineFollower.Initialize(Refs.EndingPath, 1, 4f, startT: 0f, endT: 0.975f)
                     );
                 })
                 .Then(_ =>
