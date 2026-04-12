@@ -51,6 +51,8 @@ namespace ColbyO.Untitled
 
         private void SpawnCar()
         {
+            if (UTGameManager.IsPaused) return;
+
             int laneIndex = Random.Range(0, 2);
 
             if (_isLeftLandDisabled && laneIndex == 1) return;

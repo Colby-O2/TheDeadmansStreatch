@@ -1,27 +1,25 @@
+using ColbyO.Untitled.UI;
 using InteractionSystem.Controls;
 using InteractionSystem.UI;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace ColbyO.Untitled.UI
+namespace ColbyO.Untitled
 {
-    public class MainMenuView : View
+    public class PausedView : View
     {
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private GameObject _view;
 
-        [SerializeField] private EventButton _play;
+        [SerializeField] private GameObject _backdrop;
+
+        [SerializeField] private EventButton _resume;
         [SerializeField] private EventButton _settings;
         [SerializeField] private EventButton _quit;
-
-        [SerializeField] private GameObject _mainMenuCamera;
-        [SerializeField] private GameObject _playerCamera;
 
         private void Update()
         {
@@ -30,7 +28,7 @@ namespace ColbyO.Untitled.UI
 
         public override void Init()
         {
-            _play.onPointerDown.AddListener(Play);
+            _resume.onPointerDown.AddListener(Resume);
             _settings.onPointerDown.AddListener(Settings);
             _quit.onPointerDown.AddListener(Quit);
         }
@@ -38,24 +36,17 @@ namespace ColbyO.Untitled.UI
         public override void Show()
         {
             base.Show();
-
-            _view.SetActive(true);
-
-            VirtualCaster.ShowCursor();
-            UTGameManager.HideCursor();
-
-            UTGameManager.HasStarted = false;
-
+            _backdrop.SetActive(true);
             UTGameManager.PlayerInteractiorController.Controls.InspectionClickAction.performed += OnClick;
-
-            UTGameManager.LockMovement = true;
+            UTGameManager.IsPaused = true;
+            VirtualCaster.ShowCursor();
         }
 
         public override void Hide()
         {
             base.Hide();
-            VirtualCaster.HideCursor();
             UTGameManager.PlayerInteractiorController.Controls.InspectionClickAction.performed -= OnClick;
+            VirtualCaster.HideCursor();
         }
 
         public void OnClick(InputAction.CallbackContext ctx)
@@ -95,25 +86,11 @@ namespace ColbyO.Untitled.UI
             ExecuteEvents.Execute(go, eventData, ExecuteEvents.pointerClickHandler);
         }
 
-        private void Play()
+        public void Resume()
         {
-            UTGameManager.HideCursor();
-            VirtualCaster.HideCursor();
-
-            GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(3f)
-            .Then(_ =>
-            {
-                UTGameManager.HasStarted = true;
-
-                _view.SetActive(false);
-                _mainMenuCamera.SetActive(false);
-                _playerCamera.SetActive(true);
-
-                GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeIn(5f);
-
-                GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>();
-                GameManager.GetMonoSystem<IGameLogicMonoSystem>().TriggerEvent("Act1");
-            });
+            UTGameManager.IsPaused = false;
+            _backdrop.SetActive(false);
+            GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
         }
 
         private void Settings()

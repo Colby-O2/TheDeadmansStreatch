@@ -40,6 +40,8 @@ namespace ColbyO.Untitled.Wildlife
 
         private void Update()
         {
+            if (UTGameManager.IsPaused) return;
+
             switch (_currentState)
             {
                 case FowlState.Flying:

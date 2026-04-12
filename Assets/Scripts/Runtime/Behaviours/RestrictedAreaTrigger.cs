@@ -22,6 +22,11 @@ namespace ColbyO.Untitled
         private bool _isProcessing = false;
         private bool _hasTriggered = false;
 
+        public void SetDialogue(string name)
+        {
+            _dialogue = name;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (_isProcessing) return;

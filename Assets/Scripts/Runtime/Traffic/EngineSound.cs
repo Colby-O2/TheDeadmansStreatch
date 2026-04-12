@@ -1,3 +1,5 @@
+using PlazmaGames.Audio;
+using PlazmaGames.Core;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -121,7 +123,7 @@ namespace ColbyO.Untitled.Traffic
 
             for (int i = 0; i < data.Length; i += channels)
             {
-                float v = Process();
+                float v = Process() * GameManager.GetMonoSystem<IAudioMonoSystem>().GetOverallVolume();
 
                 for (int j = 0; j < channels; j++)
                 {

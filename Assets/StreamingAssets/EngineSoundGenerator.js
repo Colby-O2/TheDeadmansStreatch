@@ -27,25 +27,23 @@ class EngineSoundGenerator extends AudioWorkletProcessor {
 		let baseFreq = this.rpm * this.freqScale;
 		let sub = 0;
 		let totalVolume = 0;
+
 		for (let j = 0; j < this.waves.length; j++) {
 			let wave = this.waves[j];
-			this.phase[j] += baseFreq * wave.overtone / this.sampleRate; 
-			if (this.phase[j] >= 100.0) this.phase[j] -= 100.0;
-			if (!this.ff) {
-				console.log(this);
-				this.ff = true;
-			}
+
+			this.phase[j] += (baseFreq * wave.overtone * (2 * Math.PI)) / this.sampleRate;
+			if (this.phase[j] > Math.PI * 2) this.phase[j] -= Math.PI * 2;
+
 			totalVolume += wave.volume;
-			sub += wave.volume * Math.pow(
-				Math.sin(this.phase[j] + wave.offset),
-				Math.floor(
-					wave.baseDuty + this.baseDuty * wave.dutyScale +
-					(this.throttle > 0.1 ? 1 : 0) * this.throttleDuty * wave.throttleDutyScale
-				)
-			);
+
+			let dutyExp = wave.baseDuty + this.baseDuty * wave.dutyScale +
+				(this.throttle > 0.1 ? 1 : 0) * this.throttleDuty * wave.throttleDutyScale;
+
+			let p = Math.sin(this.phase[j] + wave.offset);
+			sub += wave.volume * Math.pow(Math.abs(p), Math.floor(dutyExp)) * Math.sign(p);
 		}
 
-		return sub / totalVolume;
+		return totalVolume > 0 ? (sub / totalVolume) : 0;
 	}
 
 	process(inputs, outputs, parameters) {

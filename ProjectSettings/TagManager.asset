@@ -41,6 +41,8 @@ TagManager:
   - Act1_EndingDriversDoor
   - Act1_EndDoor
   - SnowFallController
+  - Act1_ParkOOB
+  - Act1_RoadOOB
   layers:
   - Default
   - TransparentFX

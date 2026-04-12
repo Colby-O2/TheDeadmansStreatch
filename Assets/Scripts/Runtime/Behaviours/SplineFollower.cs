@@ -48,7 +48,7 @@ namespace ColbyO.Untitled
 
         private void Update()
         {
-            if (_targetSpline == null || _duration <= 0) return;
+            if (_targetSpline == null || _duration <= 0 || UTGameManager.IsPaused) return;
 
             _progress += Time.deltaTime / _duration;
 

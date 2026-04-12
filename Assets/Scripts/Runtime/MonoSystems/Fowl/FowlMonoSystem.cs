@@ -47,6 +47,8 @@ namespace ColbyO.Untitled.MonoSystems
 
         private void Update()
         {
+            if (UTGameManager.IsPaused) return;
+
             if (_activeFlocks.Count < _maxFlocks)
             {
                 if (Random.value < _newFlockSpawnChance * Time.deltaTime)
@@ -60,7 +62,7 @@ namespace ColbyO.Untitled.MonoSystems
         {
             for (int i = 0; i < _maxFlocks; i++)
             {
-                FowlSettings settings = _fowlSettings[Random.Range(0, _fowlSettings.Count)];
+                FowlSettings settings = _fowlSettings[i % _fowlSettings.Count];
 
                 FlockController newFlock = Instantiate<FlockController>(_flockPrefab);
                 newFlock.gameObject.name = $"FowlFlock";

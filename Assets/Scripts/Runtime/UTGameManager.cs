@@ -15,8 +15,8 @@ namespace ColbyO.Untitled
         public static Scheduler GlobalScheduler = new Scheduler();
 
         public static bool IsPaused { get; set; }
-
         public static bool LockMovement { get; set; }
+        public static bool HasStarted { get; set; }
 
         public static Player.ViewController PlayerViewController;
         public static Player.MovementController PlayerMoveController;

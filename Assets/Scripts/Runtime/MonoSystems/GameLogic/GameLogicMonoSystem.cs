@@ -57,6 +57,9 @@ namespace ColbyO.Untitled.MonoSystems
             public static SplineFollower SerialKillerCar;
             public static EngineSound SerialKillerEngine;
 
+            public static RestrictedAreaTrigger RoadOOB;
+            public static RestrictedAreaTrigger ParkOOB;
+
         }
 
         private void OnEnable()
@@ -109,6 +112,9 @@ namespace ColbyO.Untitled.MonoSystems
 
             Refs.SerialKillerCar = GameObject.FindWithTag("Act1_SerialKillerCar").GetComponent<SplineFollower>();
             Refs.SerialKillerEngine = GameObject.FindWithTag("Act1_SerialKillerCar").GetComponent<EngineSound>();
+
+            Refs.RoadOOB = GameObject.FindWithTag("Act1_RoadOOB").GetComponent<RestrictedAreaTrigger>();
+            Refs.ParkOOB = GameObject.FindWithTag("Act1_ParkOOB").GetComponent<RestrictedAreaTrigger>();
         }
 
         private void Update()
@@ -166,9 +172,15 @@ namespace ColbyO.Untitled.MonoSystems
 
                     GameManager.GetMonoSystem<ITrafficMonoSystem>().DisableLeftLane(true);
 
+                    Refs.RoadOOB.SetDialogue("RoadOOB");
+                    Refs.ParkOOB.SetDialogue("ParkOOB");
+                    Refs.RoadOOB.gameObject.SetActive(false);
+                    Refs.ParkOOB.gameObject.SetActive(false);
+
                     Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 2, 10f)
                     .Then(_ =>
                     {
+                        Refs.RoadOOB.gameObject.SetActive(true);
                         GameManager.GetMonoSystem<ITrafficMonoSystem>().DisableLeftLane(false);
                         Refs.PlayerCarAudio.ToggleEngine(false);
                         UTGameManager.PlayerAnimationController.SetFlag("IsParked", true);
@@ -211,7 +223,11 @@ namespace ColbyO.Untitled.MonoSystems
                         Debug.Log("HERE  :)");
                     })
                     .Then(_ => _scheduler.When(() => IsInRange("PhotoArea")))
-                    .Then(_ => _dialogueMs.StartDialoguePromise("Arrive", true))
+                    .Then(_ => 
+                    {
+                        Refs.ParkOOB.gameObject.SetActive(true);
+                        return _dialogueMs.StartDialoguePromise("Arrive", true);
+                    })
                     .Then(_ => _scheduler.When(() => IsTriggered("GotPhotos")))
                     .Then(_ =>
                     {
@@ -225,7 +241,11 @@ namespace ColbyO.Untitled.MonoSystems
                         UTGameManager.PlayerViewController.ToggleFirstPerson(false);
                     })
                     .Then(_ => _scheduler.Wait(0.4f))
-                    .Then(_ => _dialogueMs.StartDialoguePromise("Gunshot"))
+                    .Then(_ => 
+                    {
+                        Refs.ParkOOB.SetDialogue("Park2OOB");
+                        return _dialogueMs.StartDialoguePromise("Gunshot", passive: true);
+                    })
                     .Then(_ => _scheduler.When(() => Refs.SightingScene.IsCameraLookingAtScene()))
                     .Then(_ =>
                     {
@@ -245,7 +265,12 @@ namespace ColbyO.Untitled.MonoSystems
                         UTGameManager.PlayerMoveController.Unfreeze();
                         UTGameManager.PlayerViewController.ToggleFirstPerson(false);
                     })
-                    .Then(_ => _dialogueMs.StartDialoguePromise("GottaGo"))
+                    .Then(_ => 
+                    {
+                        Refs.ParkOOB.gameObject.SetActive(false);
+                        Refs.RoadOOB.SetDialogue("Road2OOB");
+                        return _dialogueMs.StartDialoguePromise("GottaGo");
+                    })
                     // Car Off
                     .Then(_ =>
                     {
@@ -255,6 +280,7 @@ namespace ColbyO.Untitled.MonoSystems
                     })
                     .Then(_ =>
                     {
+                        Refs.RoadOOB.gameObject.SetActive(false);
                         GameManager.GetMonoSystem<ITrafficMonoSystem>().DisableLeftLane(true);
                         UTGameManager.PlayerWalkingAudio.Enabled = false;
                         UTGameManager.PlayerMoveController.Freeze();
