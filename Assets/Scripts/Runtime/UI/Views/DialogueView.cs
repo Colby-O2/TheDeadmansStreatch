@@ -19,6 +19,7 @@ namespace ColbyO.Untitled.UI
         [SerializeField] private TMP_Text _dialogueAvatarName;
         [SerializeField] private TMP_Text _dialogueText;
         [SerializeField] private GameObject _dialogueHint;
+        [SerializeField] private UIIcon _hintIcon;
 
         [Header("Settings")]
         [SerializeField] private float _typeSpeed = 0.05f;
@@ -45,6 +46,7 @@ namespace ColbyO.Untitled.UI
         [SerializeField, ReadOnly] private bool _isPassive;
         [SerializeField, ReadOnly] string _fullCurrentMessage;
         [SerializeField, ReadOnly] private float _timeWaitingForInput;
+        [SerializeField, ReadOnly] private bool _canAutoAdvance;
 
         public UnityEvent<int> OnChoiceSelected { get; private set; } 
         public UnityEvent OnRequestNext { get; private set; }
@@ -63,7 +65,7 @@ namespace ColbyO.Untitled.UI
 
             if (UTGameManager.IsPaused) return;
 
-            if (_isWaitingForInput)
+            if (_isWaitingForInput && _isPassive && _canAutoAdvance)
             {
                 _timeWaitingForInput += Time.deltaTime;
                 if (_timeWaitingForInput > _delayBetweenDialogues) 
@@ -79,16 +81,16 @@ namespace ColbyO.Untitled.UI
             HideDialogue();
             HideChoice();
             RegisterInputs();
+
+            _dialogueHint.SetActive(false);
         }
 
         public override void Show()
         {
             base.Show();
-            _nextAction.Enable();
         }
         public override void Hide()
         {
-            _nextAction.Disable();
             DisableChoiceInput();
             HideChoice();
             HideDialogue();
@@ -111,15 +113,23 @@ namespace ColbyO.Untitled.UI
             {
                 if (icon.IsActive()) icon.UpdateIconMaterial();
             }
+
+            if (_hintIcon.IsActive()) _hintIcon.UpdateIconMaterial();
         }
 
         public void DisplayMessage(string actor, string message, bool passive = false)
         {
             HideChoice();
 
+            _nextAction.Enable();
+
+            _canAutoAdvance = false;
+
             _isPassive = passive;
             _fullCurrentMessage = message;
             _dialogueAvatarName.text = actor;
+
+            _timeWaitingForInput = 0.0f;
 
             _dialogueHolder.SetActive(true);
             _dialogueHint.SetActive(false);
@@ -129,6 +139,7 @@ namespace ColbyO.Untitled.UI
                 if (_as && _as.isPlaying) _as.Stop();
                 StopCoroutine(_typeRoutine);
             }
+
             _typeRoutine = StartCoroutine(TypewriterRoutine(message));
         }
 
@@ -162,10 +173,18 @@ namespace ColbyO.Untitled.UI
 
         public void HideDialogue()
         {
-            if (_typeRoutine != null || _isTyping) CompleteTyping();
-            _dialogueHolder.SetActive(false);
+            if (_typeRoutine != null)
+            {
+                StopCoroutine(_typeRoutine);
+                _typeRoutine = null;
+            }
+
+            if (_as && _as.isPlaying) _as.Stop();
+
             _isTyping = false;
             _isWaitingForInput = false;
+
+            _dialogueHolder.SetActive(false);
         }
 
         public void HideChoice()
@@ -210,6 +229,8 @@ namespace ColbyO.Untitled.UI
 
             if (_as) _as.Stop();
 
+            if (!_dialogueHint.activeSelf && !_isPassive) _dialogueHint.SetActive(true);
+
             CompleteTyping();
         }
 
@@ -229,6 +250,8 @@ namespace ColbyO.Untitled.UI
             _isTyping = false;
             _isWaitingForInput = true;
             _timeWaitingForInput = 0.0f;
+
+            _canAutoAdvance = true;
         }
 
         private void HandleNextPressed()
@@ -238,6 +261,7 @@ namespace ColbyO.Untitled.UI
             if (_isTyping)
             {
                 if (_as && _as.isPlaying) _as.Stop();
+                if (!_dialogueHint.activeSelf && !_isPassive) _dialogueHint.SetActive(true);
                 CompleteTyping();
             }
             else if (_isWaitingForInput)

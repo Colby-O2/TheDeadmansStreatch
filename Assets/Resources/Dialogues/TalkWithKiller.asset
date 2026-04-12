@@ -230,29 +230,6 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: ae732904-4d6e-4ba7-a461-a647d2f862a1
-  - Guid: ae732904-4d6e-4ba7-a461-a647d2f862a1
-    ActorName: 
-    GroupName: 
-    Type: 2
-    Text: 
-    EventID: 
-    position: {x: 3803, y: -313}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: Yes
-      Next: 0e0958fe-9132-4e60-b615-450721624286
-    - Text: No
-      Next: 
   - Guid: 0e0958fe-9132-4e60-b615-450721624286
     ActorName: Iris
     GroupName: 
@@ -274,71 +251,6 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 2c5d1ca7-7ba4-4959-969f-25dc6f1a19f4
-  - Guid: 2c5d1ca7-7ba4-4959-969f-25dc6f1a19f4
-    ActorName: Stranger
-    GroupName: 
-    Type: 1
-    Text: "Alright. Let me ask you something\u2026"
-    EventID: 
-    position: {x: 4575, y: -305}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: 
-      Next: 36cf9e0e-a46e-4750-987a-cdb156105a2c
-  - Guid: 36cf9e0e-a46e-4750-987a-cdb156105a2c
-    ActorName: Stranger
-    GroupName: 
-    Type: 1
-    Text: You planning on taking that to someone?
-    EventID: 
-    position: {x: 4945, y: -294}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: 
-      Next: a56e002a-4e6e-4246-b0e2-044c917c5a0a
-  - Guid: a56e002a-4e6e-4246-b0e2-044c917c5a0a
-    ActorName: Iris
-    GroupName: 
-    Type: 2
-    Text: 
-    EventID: 
-    position: {x: 5318, y: -299}
-    PropertyType: 
-    PropertyBooleanValue: 0
-    PropertyIntValue: 0
-    PropertyName: 
-    IncrementAmount: 0
-    ComparisonType: 0
-    ComparsionCondition: 0
-    CameraFromLocationTag: 
-    CameraToLocationTag: 
-    CameraLookAtTag: 
-    Duration: 0
-    Choices:
-    - Text: Yes
-      Next: 433fb818-f047-41fa-8b91-dc34c394f57a
-    - Text: No
-      Next: 34526754-25a1-440e-baa4-5701a2a0ea71
   - Guid: 34526754-25a1-440e-baa4-5701a2a0ea71
     ActorName: Iris
     GroupName: 
@@ -448,7 +360,7 @@ MonoBehaviour:
     ActorName: Stranger
     GroupName: 
     Type: 1
-    Text: "\u2026that\u2019s a serious thing to go around say."
+    Text: "\u2026that\u2019s a serious thing to go around saying."
     EventID: 
     position: {x: 2290, y: -235}
     PropertyType: 
@@ -678,5 +590,93 @@ MonoBehaviour:
     Choices:
     - Text: 
       Next: 
+  - Guid: ae732904-4d6e-4ba7-a461-a647d2f862a1
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 3806, y: -282}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Yes
+      Next: 0e0958fe-9132-4e60-b615-450721624286
+    - Text: No
+      Next: 2073b37b-2733-4a1c-a368-f1b2148344fc
+  - Guid: 2c5d1ca7-7ba4-4959-969f-25dc6f1a19f4
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: "Alright. Let me ask you something\u2026"
+    EventID: 
+    position: {x: 4584, y: -366}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 36cf9e0e-a46e-4750-987a-cdb156105a2c
+  - Guid: 36cf9e0e-a46e-4750-987a-cdb156105a2c
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: You planning on taking that to someone?
+    EventID: 
+    position: {x: 4951, y: -355}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: a56e002a-4e6e-4246-b0e2-044c917c5a0a
+  - Guid: a56e002a-4e6e-4246-b0e2-044c917c5a0a
+    ActorName: Iris
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 5325, y: -316}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Yes
+      Next: 433fb818-f047-41fa-8b91-dc34c394f57a
+    - Text: No
+      Next: 34526754-25a1-440e-baa4-5701a2a0ea71
   Groups: []
   Properties: []

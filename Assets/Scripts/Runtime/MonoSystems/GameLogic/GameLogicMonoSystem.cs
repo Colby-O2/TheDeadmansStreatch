@@ -226,6 +226,13 @@ namespace ColbyO.Untitled.MonoSystems
                     .Then(_ => 
                     {
                         Refs.ParkOOB.gameObject.SetActive(true);
+
+                        float t = 0f;
+                        Refs.TrafficSpline.Evaluate(3, t, out float3 pos, out float3 tangent, out float3 _);
+                        Quaternion rot = Quaternion.LookRotation(tangent, Vector3.up);
+                        Transform car = Refs.PlayerCarController.transform;
+                        car.SetPositionAndRotation(pos, rot);
+
                         return _dialogueMs.StartDialoguePromise("Arrive", true);
                     })
                     .Then(_ => _scheduler.When(() => IsTriggered("GotPhotos")))
