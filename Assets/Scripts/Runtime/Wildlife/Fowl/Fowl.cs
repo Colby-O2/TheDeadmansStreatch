@@ -5,8 +5,11 @@ namespace ColbyO.Untitled
 {
     public class Fowl : MonoBehaviour
     {
+        public FowlSpecies Species;
         [SerializeField] private GameObject _swimmingMesh;
         [SerializeField] private GameObject _flyingMesh;
+
+        public GameObject GetActiveMesh() => _swimmingMesh.activeSelf ? _swimmingMesh : _flyingMesh;
 
         public void Show(FowlState state)
         {

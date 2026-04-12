@@ -63,6 +63,7 @@ namespace ColbyO.Untitled.Player
         private Vector2 _cameraAngle;
         private Vector2 _relativeCameraAngle;
         private bool _isTransitioning = false;
+        private bool _isInFirstPerson = false;
 
         public float Sensitivity => _settings.Sensitivity * (InputDeviceHandler.IsCurrentGamepad ? _settings.ControllerSensitivityScaleFactor : 1f);
         public bool IsFrozen { get; set; }
@@ -82,7 +83,29 @@ namespace ColbyO.Untitled.Player
         {
             // TODO: In Awake someone is fighting with me on weather the camera is on or not...
             _camera.gameObject.SetActive(false);
-            //_inputSystem.OnUseCamera.AddListener(ToggleFirstPerson);
+            _inputSystem.OnUseCamera.AddListener(ToggleFirstPerson);
+        }
+
+        private void ToggleFirstPerson()
+        {
+            if (UTGameManager.PlayerAnimationController.GetAnimator().GetBool("InDriverSeat")) return;
+            _isInFirstPerson = !_isInFirstPerson;
+            if (_isInFirstPerson)
+            {
+                GameManager.GetMonoSystem<IUIMonoSystem>().Show<PolaroidView>();
+                _mesh.SetActive(false);
+                _distance = _firstPersonDistance;
+                _targetOffset = 0.0f;
+                _offset = _firstPersonOffset;
+            }
+            else
+            {
+                _mesh.SetActive(true);
+                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _distance = _thirdPersonDistance;
+                _targetOffset = _thirdPersonTargetOffset;
+                _offset = _thirdPersonOffset;
+            }
         }
 
         private void Update()
@@ -144,7 +167,9 @@ namespace ColbyO.Untitled.Player
 
             minDistance = Mathf.Max(minDistance, 0.2f);
 
-            return targetPos + (desiredPos - targetPos).normalized * minDistance;
+            Vector3 pdir = (desiredPos - targetPos);
+            if (pdir.sqrMagnitude < 0.01) pdir = Vector3.forward;
+            return targetPos + pdir.normalized * minDistance;
         }
 
         private void UpdateLook()
@@ -208,6 +233,10 @@ namespace ColbyO.Untitled.Player
 
         private void UpdateCamera()
         {
+            if (float.IsNaN(_cameraAngle.x))
+            {
+                Debug.Log(_cameraAngle); _cameraAngle.x = 0;}
+            if (float.IsNaN(_cameraAngle.y)) {Debug.Log(_cameraAngle); _cameraAngle.y = 0;}
             Quaternion rotation = Quaternion.Euler(_cameraAngle.y, _cameraAngle.x, 0f);
             Vector3 direction = rotation * Vector3.back;
 

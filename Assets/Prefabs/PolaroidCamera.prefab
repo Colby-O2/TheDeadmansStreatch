@@ -13,13 +13,15 @@ GameObject:
   - component: {fileID: 4646951377585224021}
   - component: {fileID: 4346654811482401740}
   - component: {fileID: 6177986072616384106}
+  - component: {fileID: 6622805898121590567}
+  - component: {fileID: 7801885555897484950}
   m_Layer: 0
   m_Name: PolaroidCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7268256354204560024
 Transform:
   m_ObjectHideFlags: 0
@@ -45,7 +47,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -74,7 +76,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 10197
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: cd3bf8ef4c0be190d8691c41c33ebe69, type: 2}
   m_TargetDisplay: 0
@@ -111,13 +113,13 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 8192
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -150,4 +152,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27bcb0908bbb09f0c99f592e62a1ca46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.Polaroid.TakePhoto
+  _camera: {fileID: 580449732522076339}
   _cameraTexture: {fileID: 8400000, guid: cd3bf8ef4c0be190d8691c41c33ebe69, type: 2}
+  _cameraShotSound: {fileID: 8300000, guid: b0124fc10be854ab897737cb84aa0cd1, type: 3}
+--- !u!114 &6622805898121590567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194361497486475940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7bddec026c6c9eba2bd5580010715b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.Polaroid.CameraMomentum
+--- !u!114 &7801885555897484950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194361497486475940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25426bc425feff99d88ae69a17bcf42e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColbyO.Untitled.CameraZoom

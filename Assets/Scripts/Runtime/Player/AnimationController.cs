@@ -25,5 +25,7 @@ namespace ColbyO.Untitled.Player
         {
             _animator.SetBool("IsSprinting", state);
         }
+
+        public Animator GetAnimator() => _animator;
     }
 }

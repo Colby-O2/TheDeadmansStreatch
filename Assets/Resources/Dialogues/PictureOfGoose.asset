@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: PictureOfGoose
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: PictureOfGoose
+  Nodes:
+  - Guid: 0f61891d-7106-477e-b424-5eedbad24daa
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: -76, y: 488}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 376fe9ec-1aca-4f69-b3d3-04760c54812a
+  - Guid: 376fe9ec-1aca-4f69-b3d3-04760c54812a
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: <i>What a great looking goose.</i>
+    EventID: 
+    position: {x: 313, y: 471}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 969a3146-fcc6-4fbc-90a1-20ca962c2b5f
+  - Guid: 969a3146-fcc6-4fbc-90a1-20ca962c2b5f
+    ActorName: 
+    GroupName: 
+    Type: 4
+    Text: 
+    EventID: 
+    position: {x: 754, y: 563}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: GotDuck
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c11bd5cf-5390-43b9-980b-8f9cf8514dde
+    - Text: 
+      Next: 
+  - Guid: c11bd5cf-5390-43b9-980b-8f9cf8514dde
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: I should get a photo of a duck now.
+    EventID: 
+    position: {x: 1085, y: 637}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  Groups: []
+  Properties:
+  - Name: GotDuck
+    Type: Bool
+    BooleanValue: 0
+    IntValue: 0

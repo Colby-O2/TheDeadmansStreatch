@@ -33,6 +33,7 @@ TagManager:
   - Act1_SerialKillerCarPlayerLoc
   - PlayerCamera
   - Act1_SerialKillerCarKillerLoc
+  - Shutter
   layers:
   - Default
   - TransparentFX

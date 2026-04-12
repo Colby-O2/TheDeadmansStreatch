@@ -212,6 +212,7 @@ namespace ColbyO.Untitled.Player
 
         public void Freeze()
         {
+            if (_isFrozen) return;
             _isFrozen = true;
             UTGameManager.PlayerViewController.IsFrozen = true;
             if (_isJustMovementFrozen) _input.DisableMovement(justView: true);
@@ -221,6 +222,7 @@ namespace ColbyO.Untitled.Player
 
         public void Unfreeze()
         {
+            if (!_isFrozen) return;
             _isFrozen = false;
             UTGameManager.PlayerViewController.IsFrozen = false;
             
