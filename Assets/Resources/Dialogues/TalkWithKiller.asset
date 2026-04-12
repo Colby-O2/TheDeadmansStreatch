@@ -1,0 +1,682 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde6bf8a896c98c48b27db112dac91a0, type: 3}
+  m_Name: TalkWithKiller
+  m_EditorClassIdentifier: DialogueGraph::DialogueGraph.Data.DialogueGraphSO
+  id: -1
+  includeInDatabase: 1
+  Name: TalkWithKiller
+  Nodes:
+  - Guid: 59702900-ac41-4d96-bffa-9086ef1c5e45
+    ActorName: 
+    GroupName: 
+    Type: 0
+    Text: 
+    EventID: 
+    position: {x: 0, y: 0}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 9aff543b-ca96-400a-9a3b-f06dd913a9c9
+  - Guid: babb9ac2-20c1-40e8-b199-4f33176475ea
+    ActorName: Iris
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 785, y: -22}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Truth
+      Next: 6f80c241-58bc-4139-93cf-a278abed7ea9
+    - Text: Lie
+      Next: e7b505df-ce8b-4c3b-b072-194c1e1d2fa4
+  - Guid: e7b505df-ce8b-4c3b-b072-194c1e1d2fa4
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: No, I didnt hear anything.
+    EventID: 
+    position: {x: 1135, y: 195}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 0605a5f4-f8b0-471d-a7ee-3725013abf40
+  - Guid: 9aff543b-ca96-400a-9a3b-f06dd913a9c9
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: Hello Stranger! Sorry to stop you like this but did you hear that loud
+      sound off in the distance?
+    EventID: 
+    position: {x: 321, y: -25}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: babb9ac2-20c1-40e8-b199-4f33176475ea
+  - Guid: 6f80c241-58bc-4139-93cf-a278abed7ea9
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: '.. Yeah. '
+    EventID: 
+    position: {x: 1160, y: -241}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: d1a68bd3-cd3d-4da8-829b-6ce2f4a3d02e
+  - Guid: ef745f42-2912-4f75-8017-fc4839031943
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: "\u2026someone shot her."
+    EventID: 
+    position: {x: 1907, y: -237}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: c5cc134e-e43f-4835-96e4-66ff0c3920b3
+  - Guid: d1a68bd3-cd3d-4da8-829b-6ce2f4a3d02e
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: "There was a woman up on the mountian. I had my camera up\u2026 I was taking
+      a shot and"
+    EventID: 
+    position: {x: 1523, y: -247}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: ef745f42-2912-4f75-8017-fc4839031943
+  - Guid: 3051dcb5-f367-4565-82e2-5cde5b4f1a1a
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: I know what I saw.
+    EventID: 
+    position: {x: 2650, y: -245}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 7568cdd9-b415-4253-aa2e-285d6521b79f
+  - Guid: 7568cdd9-b415-4253-aa2e-285d6521b79f
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: ...
+    EventID: 
+    position: {x: 3042, y: -221}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: e1c14fbd-99fb-4f78-9807-94e4f8c7f0ff
+  - Guid: e1c14fbd-99fb-4f78-9807-94e4f8c7f0ff
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: "You said you had your camera up. \u2026you get a picture of it?"
+    EventID: 
+    position: {x: 3412, y: -260}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: ae732904-4d6e-4ba7-a461-a647d2f862a1
+  - Guid: ae732904-4d6e-4ba7-a461-a647d2f862a1
+    ActorName: 
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 3803, y: -313}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Yes
+      Next: 0e0958fe-9132-4e60-b615-450721624286
+    - Text: No
+      Next: 
+  - Guid: 0e0958fe-9132-4e60-b615-450721624286
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: "\u2026yeah, I think I did. "
+    EventID: 
+    position: {x: 4204, y: -307}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 2c5d1ca7-7ba4-4959-969f-25dc6f1a19f4
+  - Guid: 2c5d1ca7-7ba4-4959-969f-25dc6f1a19f4
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: "Alright. Let me ask you something\u2026"
+    EventID: 
+    position: {x: 4575, y: -305}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 36cf9e0e-a46e-4750-987a-cdb156105a2c
+  - Guid: 36cf9e0e-a46e-4750-987a-cdb156105a2c
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: You planning on taking that to someone?
+    EventID: 
+    position: {x: 4945, y: -294}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: a56e002a-4e6e-4246-b0e2-044c917c5a0a
+  - Guid: a56e002a-4e6e-4246-b0e2-044c917c5a0a
+    ActorName: Iris
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 5318, y: -299}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Yes
+      Next: 433fb818-f047-41fa-8b91-dc34c394f57a
+    - Text: No
+      Next: 34526754-25a1-440e-baa4-5701a2a0ea71
+  - Guid: 34526754-25a1-440e-baa4-5701a2a0ea71
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: No... of course not.
+    EventID: 
+    position: {x: 5706, y: -57}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: fceb6ebc-0eb4-4a12-a4ff-d68cc57b3ba4
+  - Guid: 433fb818-f047-41fa-8b91-dc34c394f57a
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: Yes! I'm headed to the police station as we speak.
+    EventID: 
+    position: {x: 5704, y: -385}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 988ca91d-d151-4817-9218-197a87b2b2fc
+  - Guid: fceb6ebc-0eb4-4a12-a4ff-d68cc57b3ba4
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: I believe you....
+    EventID: 
+    position: {x: 6053, y: -56}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 6d86933a-ec86-4e20-83e4-2d9e21f91662
+  - Guid: 6d86933a-ec86-4e20-83e4-2d9e21f91662
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: But... you're just my type. Your going to need to come with me <b>NOW</b>.
+    EventID: 
+    position: {x: 6404, y: -54}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  - Guid: 988ca91d-d151-4817-9218-197a87b2b2fc
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: Ok... Your going to need to come with me <b>NOW</b>.
+    EventID: 
+    position: {x: 6147, y: -371}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  - Guid: c5cc134e-e43f-4835-96e4-66ff0c3920b3
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: "\u2026that\u2019s a serious thing to go around say."
+    EventID: 
+    position: {x: 2290, y: -235}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 3051dcb5-f367-4565-82e2-5cde5b4f1a1a
+  - Guid: 2b0c96df-4c3e-438d-b895-484116ebeaef
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: "You\u2019re sure about that?"
+    EventID: 
+    position: {x: 1900, y: 203}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: ac98854d-e90c-442e-ac0a-708b380d3b0a
+  - Guid: 0605a5f4-f8b0-471d-a7ee-3725013abf40
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: "Right\u2026"
+    EventID: 
+    position: {x: 1534, y: 201}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 2b0c96df-4c3e-438d-b895-484116ebeaef
+  - Guid: ac98854d-e90c-442e-ac0a-708b380d3b0a
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: "\u2026yeah."
+    EventID: 
+    position: {x: 2299, y: 218}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 2073b37b-2733-4a1c-a368-f1b2148344fc
+  - Guid: 49b4a5e7-6add-4303-b931-7447fd12b466
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: 'I think you should come with me... For your safety of course. '
+    EventID: 
+    position: {x: 3084, y: 233}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 8d63c73a-3a8b-4c58-8a0a-5a69ab7257d4
+  - Guid: 2073b37b-2733-4a1c-a368-f1b2148344fc
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: 'Well... These parts aren''t safe. I hear there is some sort of killer
+      on the lose around these parts. '
+    EventID: 
+    position: {x: 2700, y: 229}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 49b4a5e7-6add-4303-b931-7447fd12b466
+  - Guid: 8d63c73a-3a8b-4c58-8a0a-5a69ab7257d4
+    ActorName: Iris
+    GroupName: 
+    Type: 2
+    Text: 
+    EventID: 
+    position: {x: 3504, y: 217}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: Sure!
+      Next: 01f0f175-26c4-4a0b-ba72-ff7de91bac00
+    - Text: No!
+      Next: fa40a325-d7e8-40f2-82bb-1619a29774ce
+  - Guid: fa40a325-d7e8-40f2-82bb-1619a29774ce
+    ActorName: Iris
+    GroupName: 
+    Type: 1
+    Text: No thanks, i'm good.
+    EventID: 
+    position: {x: 3867, y: 574}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: f1568fb0-60bf-44ce-9b66-30364ee62f2d
+  - Guid: f1568fb0-60bf-44ce-9b66-30364ee62f2d
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: But you see... you're just my type and <b>I ain't asking</b>.
+    EventID: 
+    position: {x: 4282, y: 563}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  - Guid: 01f0f175-26c4-4a0b-ba72-ff7de91bac00
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: I was hoping you would say that! I love it when they play along.
+    EventID: 
+    position: {x: 3962, y: 155}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 663cd0b7-c884-4f46-811f-f5df707f837e
+  - Guid: 663cd0b7-c884-4f46-811f-f5df707f837e
+    ActorName: Stranger
+    GroupName: 
+    Type: 1
+    Text: Time to get out <b>NOW</b> darling.
+    EventID: 
+    position: {x: 4323, y: 160}
+    PropertyType: 
+    PropertyBooleanValue: 0
+    PropertyIntValue: 0
+    PropertyName: 
+    IncrementAmount: 0
+    ComparisonType: 0
+    ComparsionCondition: 0
+    CameraFromLocationTag: 
+    CameraToLocationTag: 
+    CameraLookAtTag: 
+    Duration: 0
+    Choices:
+    - Text: 
+      Next: 
+  Groups: []
+  Properties: []

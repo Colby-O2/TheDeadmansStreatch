@@ -203,12 +203,6 @@ namespace ColbyO.Untitled.Player
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
 
-            bool wasFrozen = _isFrozen;
-            bool prevCCState = _controller.enabled;
-
-            if (!wasFrozen) Freeze();
-            if (prevCCState) DisableChacaterController();
-
             return GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
                 duration,
@@ -220,12 +214,7 @@ namespace ColbyO.Untitled.Player
                         Quaternion.Slerp(startRot, endRot, alpha)
                     );
                 }
-            )
-            .Then(_ =>
-            {
-                if (!wasFrozen) Unfreeze();
-                if (prevCCState) EnableChacaterController();
-            });
+            );
         }
 
         public void FreezeJustMovement()

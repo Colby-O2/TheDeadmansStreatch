@@ -11,6 +11,17 @@ namespace ColbyO.Untitled
         [SerializeField] private bool _followAtHeight;
         [SerializeField] private float _followHeight;
 
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+        }
+
+        public void SetFollowAtHeight(bool state, float followHeight = 0f)
+        {
+            _followAtHeight = state;
+            _followHeight = followHeight;
+        }
+
         private void Update()
         {
             Vector2 pos = new Vector2(_target.position.x, _target.position.z);

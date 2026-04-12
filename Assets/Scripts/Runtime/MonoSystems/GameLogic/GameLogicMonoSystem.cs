@@ -54,9 +54,6 @@ namespace ColbyO.Untitled.MonoSystems
             public static Openable EndDoor;
             public static SplineContainer EndingPath;
 
-            public static VelocityTracker CinematicVelocity;
-            public static SnowFallController SnowFallController;
-
             public static SplineFollower SerialKillerCar;
             public static EngineSound SerialKillerEngine;
 
@@ -105,9 +102,6 @@ namespace ColbyO.Untitled.MonoSystems
 
             Refs.KillerSplineFollower = Refs.SerialKiller.GetComponent<SplineFollower>();
             Refs.PlayerSplineFollower = UTGameManager.PlayerMoveController.GetComponent<SplineFollower>();
-
-            Refs.CinematicVelocity = GameManager.GetMonoSystem<ICinematicMonoSystem>().GetCamera().GetComponent<VelocityTracker>();
-            Refs.SnowFallController = FindAnyObjectByType<SnowFallController>();
 
             Refs.EndDoor = GameObject.FindWithTag("Act1_EndDoor").GetComponent<Openable>();
             Refs.EndDriverDoor = GameObject.FindWithTag("Act1_EndingDriversDoor").GetComponent<Openable>();
@@ -292,7 +286,7 @@ namespace ColbyO.Untitled.MonoSystems
                     {
                         Refs.SerialKiller.ToggleAudio(false);
                         UTGameManager.PlayerAnimationController.SetFlag("IsParked", false);
-                        return Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 3, 30f);
+                        return Refs.PlayerCarController.Initialize(Refs.TrafficSpline, 3, 20f);
                     })
                     .Then(_ => Refs.SerialKillerCarDoor1.Open())
                     .Then(_ =>
@@ -302,8 +296,15 @@ namespace ColbyO.Untitled.MonoSystems
                         return Refs.SerialKiller.GetOutOfCar(Refs.SerialKillerGetOutLoc, 1f);
                     })
                     .Then(_ => Refs.SerialKiller.Goto(Refs.SerialKillerGotoLoc, 3f, 1f))
+                    .Then(_ => GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise("TalkWithKiller", passive: false))
                     .Then(_ => Refs.SerialKiller.Shoot())
-                    .Then(_ => GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(2f))
+                    .Then(_ =>
+                    {
+                        UTGameManager.PlayerMoveController.Snow.SetTarget(GameManager.GetMonoSystem<ICinematicMonoSystem>().GetCameraVelocity());
+                        UTGameManager.PlayerMoveController.Snow.gameObject.GetComponent<FollowXZ>().SetTarget(GameManager.GetMonoSystem<ICinematicMonoSystem>().GetCameraVelocity().transform);
+                        UTGameManager.PlayerMoveController.Snow.gameObject.GetComponent<FollowXZ>().SetFollowAtHeight(true, 10.0f);
+                        return GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(2f);
+                    })
                     .Then(_ =>
                      {
                          Refs.SerialKiller.ToggleAudio(false);
@@ -321,67 +322,90 @@ namespace ColbyO.Untitled.MonoSystems
 
                          GameManager.GetMonoSystem<ICinematicMonoSystem>().Enable();
 
-                         UTGameManager.PlayerMoveController.Snow.SetTarget(GameManager.GetMonoSystem<ICinematicMonoSystem>().GetCamera().GetComponent<VelocityTracker>());
                          GameManager.GetMonoSystem<ICinematicMonoSystem>().MoveTo("CC_End1");
                          return GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeIn(2f);
                      })
-                    .Then(_ =>
+                .Then(_ =>
+                {
+                    Refs.SerialKillerCar.WaitFor(0.75f).Then(_ =>
+                        GameManager.GetMonoSystem<ICinematicMonoSystem>().HandleCameraTransition("CC_End1", "CC_End2", string.Empty, 2f));
+
+                    return Refs.SerialKillerCar.Initialize(Refs.TrafficSpline, 4, 7.5f);
+                })
+                .Then(_ => Refs.EndDriverDoor.Open())
+                .Then(_ =>
+                {
+                    Refs.KillerSplineFollower.AllowRotate = true;
+                    Transform splineTransform = Refs.EndingPath.transform;
+
+                    Refs.EndingPath.Splines[0].Evaluate(0f, out float3 localPos, out float3 localTangent, out float3 localUp);
+
+                    Vector3 worldPos = splineTransform.TransformPoint(localPos);
+                    Vector3 worldTangent = splineTransform.TransformDirection(localTangent);
+                    Vector3 worldUp = splineTransform.TransformDirection(localUp);
+                    Quaternion lookRotation = Quaternion.LookRotation(worldTangent, worldUp);
+
+                    return Refs.SerialKiller.GetOutOfCar(worldPos, lookRotation, 2f);
+                })
+                .Then(_ =>
+                {
+                    Refs.SerialKiller.ToggleAudio(true);
+                    return Refs.KillerSplineFollower.Initialize(Refs.EndingPath, 0, 2f);
+                })
+                .Then(_ =>
+                {
+                    Refs.KillerSplineFollower.AllowRotate = false;
+                    Refs.SerialKiller.SetAlwaysLookAt(UTGameManager.PlayerMoveController.transform);
+                    return Refs.SerialKiller.Shoot();
+                })
+                .Then(_ => Refs.EndDoor.Open())
+                .Then(_ =>
+                {
+                    UTGameManager.PlayerMoveController.UnfreezeJustMovement();
+                    UTGameManager.PlayerMoveController.Freeze();
+
+                    Transform splineTransform = Refs.EndingPath.transform;
+
+                    Refs.EndingPath.Splines[1].Evaluate(0.05f, out float3 localPos, out float3 localTangent, out float3 _);
+
+                    Vector3 worldPos = splineTransform.TransformPoint(localPos);
+                    Quaternion worldRot = Quaternion.LookRotation(splineTransform.TransformDirection(localTangent));
+
+                    return UTGameManager.PlayerMoveController.GetOutOfCar(worldPos.SetY(worldPos.y + 1f), worldRot, 1.5f);
+                })
+                .Then(_ =>
+                {
+                    Refs.PlayerSplineFollower.HeightOffset = 1f;
+                    Refs.KillerSplineFollower.AllowRotate = true;
+                    Refs.SerialKiller.SetAlwaysLookAt(null);
+
+                    UTGameManager.PlayerWalkingAudio.Enabled = true;
+
+                    UTGameManager.PlayerAnimationController.SetFlag("IsWalking", true);
+                    Refs.SerialKiller.GetAnimator().SetBool("IsWalking", true);
+
+                    Refs.PlayerSplineFollower.WaitFor(0.3f).Then(_ =>
                     {
-                        Refs.SerialKillerCar.WaitFor(0.75f).Then(_ => GameManager.GetMonoSystem<ICinematicMonoSystem>().HandleCameraTransition("CC_End1", "CC_End2", string.Empty, 2f));
-                        return Refs.SerialKillerCar.Initialize(Refs.TrafficSpline, 4, 30f);
-                    })
-                    .Then(_ => Refs.EndDriverDoor.Open())
-                    .Then(_ =>
-                    {
-                        Refs.KillerSplineFollower.AllowRotate = true;
-
-                        Transform splineTransform = Refs.EndingPath.transform;
-
-                        Refs.EndingPath.Splines[0].Evaluate(0f, out float3 localPos, out float3 localTangent, out float3 localUp);
-
-                        Vector3 worldPos = splineTransform.TransformPoint(localPos);
-                        Vector3 worldTangent = splineTransform.TransformDirection(localTangent);
-                        Vector3 worldUp = splineTransform.TransformDirection(localUp);
-
-                        Quaternion lookRotation = Quaternion.LookRotation(worldTangent, worldUp);
-
-                        Refs.SerialKiller.GetOutOfCar(worldPos, lookRotation, 2f);
-                    })
-                    .Then(_ =>
-                    {
-                        return Refs.KillerSplineFollower.Initialize(Refs.EndingPath, 0, 2);
-                    })
-                    .Then(_ =>
-                    {
-                        Refs.KillerSplineFollower.AllowRotate = false;
-                        Refs.SerialKiller.SetAlwaysLookAt(UTGameManager.PlayerMoveController.transform);
-                    })
-                    .Then(_ =>
-                    {
-                        Refs.SerialKiller.Shoot();
-                    })
-                    .Then(_ => Refs.EndDoor.Open())
-                    .Then(_ =>
-                     {
-                         Transform splineTransform = Refs.EndingPath.transform;
-
-                         Refs.EndingPath.Splines[1].Evaluate(0.2f, out float3 localPos, out float3 localTangent, out float3 localUp);
-                         Vector3 worldPos = splineTransform.TransformPoint(localPos);
-                         Vector3 worldTangent = splineTransform.TransformDirection(localTangent);
-                         Quaternion worldRot = Quaternion.LookRotation(worldTangent);
-
-                         return UTGameManager.PlayerMoveController.GetOutOfCar(worldPos.SetY(worldPos.y + 1f), worldRot, 1.5f);
-                     })
-                    .Then(_ =>
-                    {
-                        Refs.PlayerSplineFollower.HeightOffset = 1f;
-                        Refs.KillerSplineFollower.AllowRotate = false;
-
-                        return Promise.All(
-                            Refs.PlayerSplineFollower.Initialize(Refs.EndingPath, 1, 0.1f, startDst: 0.2f),
-                            Refs.KillerSplineFollower.Initialize(Refs.EndingPath, 1, 0.1f)
-                        );
+                        GameManager.GetMonoSystem<ICinematicMonoSystem>().MoveTo("CC_End3");
                     });
+
+                    Refs.PlayerSplineFollower.WaitFor(0.6f).Then(_ =>
+                    {
+                        GameManager.GetMonoSystem<ICinematicMonoSystem>().MoveTo("CC_End4");
+                    });
+
+                    return Promise.All(
+                        Refs.PlayerSplineFollower.Initialize(Refs.EndingPath, 1, 4f, startDst: 0.05f),
+                        Refs.KillerSplineFollower.Initialize(Refs.EndingPath, 1, 4f, startDst: 0f, endDist: 0.975f)
+                    );
+                })
+                .Then(_ =>
+                {
+                    GameManager.GetMonoSystem<ICinematicMonoSystem>().MoveTo("CC_End5");
+                    UTGameManager.PlayerAnimationController.SetFlag("IsWalking", false);
+                    Refs.SerialKiller.GetAnimator().SetBool("IsWalking", false);
+                    Debug.Log("Both reached the top of the hill.");
+                });
                     break;
             }
         }

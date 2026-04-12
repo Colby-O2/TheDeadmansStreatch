@@ -2,6 +2,7 @@ using PlazmaGames.Animation;
 using PlazmaGames.Core;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ColbyO.Untitled.MonoSystems
@@ -14,6 +15,8 @@ namespace ColbyO.Untitled.MonoSystems
         private Dictionary<string, Transform> _cameraLocations = new Dictionary<string, Transform>();
 
         private CameraShake _cinematicCamera;
+        private VelocityTracker _vel;
+
         private GameObject _cinematicView;
         private GameObject _playerCamera;
 
@@ -25,6 +28,7 @@ namespace ColbyO.Untitled.MonoSystems
             if (cinematicCameraGO != null)
             {
                 _cinematicCamera = cinematicCameraGO.GetComponent<CameraShake>();
+                _vel = cinematicCameraGO.GetComponent<VelocityTracker>();
             }
 
             _cinematicView = GameObject.FindWithTag("CinematicView");
@@ -32,7 +36,7 @@ namespace ColbyO.Untitled.MonoSystems
             Disabe(false);
         }
 
-        public GameObject GetCamera() => _cinematicCamera.gameObject;
+        public VelocityTracker GetCameraVelocity() => _vel;
 
         public void Enable(bool lockMovement = true)
         {

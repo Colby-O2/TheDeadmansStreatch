@@ -8,7 +8,7 @@ namespace ColbyO.Untitled.MonoSystems
     {
         public void Enable(bool lockMovement = true);
         public void Disabe(bool setGlobalLock = true);
-        public GameObject GetCamera();
+        public VelocityTracker GetCameraVelocity();
         public void MoveTo(string tag, string lookAtTag = "");
         public void MoveTo(Transform loc, Transform lookAt = null, Transform parnet = null);
         public Promise HandleCameraTransition(string fromTag, string toTag, string lookAtTag, float duration);
