@@ -1,3 +1,5 @@
+using ColbyO.Untitled.UI;
+using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
 
@@ -16,6 +18,7 @@ namespace ColbyO.Untitled
         public override void Show()
         {
             base.Show();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().SetCameraHint(false);
             if (_polaroidCamera && !_polaroidCamera.gameObject.activeSelf) _polaroidCamera.gameObject.SetActive(true);
             if (_playerCamera && _playerCamera.gameObject.activeSelf) _playerCamera.gameObject.SetActive(false);
         }

@@ -1,3 +1,4 @@
+using InteractionSystem.UI;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using System;
@@ -9,8 +10,19 @@ namespace ColbyO.Untitled.UI
     public class GameView : View
     {
         [SerializeField] private InputAction _pauseAction;
+        [SerializeField] private UIIcon _cameraHintIcon;
 
         public InputAction Action { get => _pauseAction; }
+
+        private void Update()
+        {
+            if (_cameraHintIcon.IsActive()) _cameraHintIcon.UpdateIconMaterial();
+        }
+
+        public void SetCameraHint(bool state)
+        {
+            _cameraHintIcon.SetActive(state);
+        }
 
         public override void Show()
         {
@@ -23,6 +35,8 @@ namespace ColbyO.Untitled.UI
 
         public override void Init()
         {
+            SetCameraHint(false);
+
             _pauseAction.performed -= HandlePause;
             _pauseAction.performed += HandlePause;
             _pauseAction.Enable();

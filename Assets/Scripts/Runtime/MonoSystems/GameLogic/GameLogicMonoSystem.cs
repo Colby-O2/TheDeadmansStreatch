@@ -1,9 +1,11 @@
 using ColbyO.Untitled.Player;
 using ColbyO.Untitled.Traffic;
+using ColbyO.Untitled.UI;
 using InteractionSystem;
 using InteractionSystem.Helpers;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
+using PlazmaGames.UI;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -226,6 +228,8 @@ namespace ColbyO.Untitled.MonoSystems
                     .Then(_ => 
                     {
                         Refs.ParkOOB.gameObject.SetActive(true);
+
+                        GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().SetCameraHint(true);
 
                         float t = 0f;
                         Refs.TrafficSpline.Evaluate(3, t, out float3 pos, out float3 tangent, out float3 _);
