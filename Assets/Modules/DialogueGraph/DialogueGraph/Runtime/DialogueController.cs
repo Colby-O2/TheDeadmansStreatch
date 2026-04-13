@@ -132,8 +132,6 @@ namespace DialogueGraph
 
         public void FinishDialogue()
         {
-            _completelyFinishedCallback?.Invoke();
-            _completelyFinishedCallback = null;
             _currentDialogue = null;
             _currentDialogueNode = null;
             _isDialogueInProgress = false;
@@ -141,6 +139,9 @@ namespace DialogueGraph
             //DisabeCinematicCamera();
             
             OnDialogueFinished();
+            var func = _completelyFinishedCallback;
+            _completelyFinishedCallback = null;
+            func?.Invoke();
         }
 
         protected void InitializeFlag()

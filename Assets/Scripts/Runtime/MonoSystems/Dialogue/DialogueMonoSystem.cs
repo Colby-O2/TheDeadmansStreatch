@@ -43,7 +43,7 @@ namespace ColbyO.Untitled.MonoSystems
         {
             Promise p = new Promise();
             _isPassive = passive;
-            StartDialogue(dialogueName, () => p.Resolve(), passive);
+            StartDialogue(dialogueName, () => Promise.ResolveExisting(ref p), passive);
             return p;
         }
 
@@ -88,6 +88,7 @@ namespace ColbyO.Untitled.MonoSystems
 
         private void SelectedChoice(int choice)
         {
+            if (_currentDialogueNode == null) return;
             if (_currentDialogueNode.Choices.Count == 0) FinishDialogue();
             else NextNode(choice);
         }

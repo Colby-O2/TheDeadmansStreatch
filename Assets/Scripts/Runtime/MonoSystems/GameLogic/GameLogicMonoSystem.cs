@@ -69,6 +69,9 @@ namespace ColbyO.Untitled.MonoSystems
 
             public static List<Interactable> Interactables;
 
+            public static GameObject PushPerson;
+            public static GameObject PushPersonRig;
+            public static Rigidbody PushPersonRb;
         }
 
         private void OnEnable()
@@ -86,6 +89,11 @@ namespace ColbyO.Untitled.MonoSystems
         private void Start()
         {
             _dialogueMs = GameManager.GetMonoSystem<IDialogueMonoSystem>();
+
+            Refs.PushPerson = GameObject.FindWithTag("PushPerson");
+            Refs.PushPersonRig = GameObject.FindWithTag("PushPersonRig");
+            Refs.PushPersonRb = GameObject.FindWithTag("PushPersonRb").GetComponent<Rigidbody>();
+            Refs.PushPersonRig.SetActive(false);
 
             Refs.SightingScene = GameObject.FindAnyObjectByType<SightingScene>();
 
@@ -181,6 +189,8 @@ namespace ColbyO.Untitled.MonoSystems
                     Refs.CameraInteractable.CanInteract = true;
                     Refs.CameraInteractable.gameObject.SetActive(true);
                     Refs.CameraInteractable.GetAction<TakeAction>().IsEnabled = false;
+                    
+                    Refs.PushPerson.SetActive(false);
 
                     Refs.PlayerCarAudio.ToggleEngine(true);
 
@@ -207,105 +217,105 @@ namespace ColbyO.Untitled.MonoSystems
 
                         return dialoguePromise;
                     })
-                    //.Then(_ =>
-                    //{
-                    //    Refs.CameraInteractable.GetAction<TakeAction>().IsEnabled = true;
-                    //    return _scheduler.When(() => GameManager.GetMonoSystem<IInventoryMonoSystem>().HasItem("Camera"));
-                    //})
-                    //.Then(_ =>
-                    //{
-                    //    Refs.PlayerCarDoor.CanInteract = true;
-                    //    return Refs.PlayerCarDoor.GetAction<CarGetOutAction>().WaitForDoorToOpen();
-                    //})
-                    //.Then(_ =>
-                    //{
-                    //    UTGameManager.PlayerAnimationController.SetFlag("InDriverSeat", false);
+                    .Then(_ =>
+                    {
+                        Refs.CameraInteractable.GetAction<TakeAction>().IsEnabled = true;
+                        return _scheduler.When(() => GameManager.GetMonoSystem<IInventoryMonoSystem>().HasItem("Camera"));
+                    })
+                    .Then(_ =>
+                    {
+                        Refs.PlayerCarDoor.CanInteract = true;
+                        return Refs.PlayerCarDoor.GetAction<CarGetOutAction>().WaitForDoorToOpen();
+                    })
+                    .Then(_ =>
+                    {
+                        UTGameManager.PlayerAnimationController.SetFlag("InDriverSeat", false);
 
-                    //    Promise playerMovePromise = UTGameManager.PlayerMoveController.TransitionTo(Refs.GetOutOfCarLoc, 1f);
+                        Promise playerMovePromise = UTGameManager.PlayerMoveController.TransitionTo(Refs.GetOutOfCarLoc, 1f);
 
-                    //    Promise cameraLerpPromise = UTGameManager.PlayerViewController.TransitionView(
-                    //        PlayerViewType.ThirdPerson,
-                    //        1f
-                    //    );
+                        Promise cameraLerpPromise = UTGameManager.PlayerViewController.TransitionView(
+                            PlayerViewType.ThirdPerson,
+                            1f
+                        );
 
-                    //    return Promise.All(playerMovePromise, cameraLerpPromise);
-                    //})
-                    //.Then(_ =>
-                    //{
-                    //    UTGameManager.PlayerWalkingAudio.Enabled = true;
-                    //    UTGameManager.PlayerMoveController.Deattach();
-                    //    UTGameManager.PlayerMoveController.UnfreezeJustMovement();
-                    //    UTGameManager.PlayerMoveController.EnableChacaterController();
-                    //    Refs.PlayerCarDoor.GetAction<CarGetOutAction>().Door.Close();
-                    //    Debug.Log("HERE  :)");
-                    //})
-                    //.Then(_ => _scheduler.When(() => IsInRange("PhotoArea")))
-                    //.Then(_ => 
-                    //{
-                    //    Refs.ParkOOB.gameObject.SetActive(true);
+                        return Promise.All(playerMovePromise, cameraLerpPromise);
+                    })
+                    .Then(_ =>
+                    {
+                        UTGameManager.PlayerWalkingAudio.Enabled = true;
+                        UTGameManager.PlayerMoveController.Deattach();
+                        UTGameManager.PlayerMoveController.UnfreezeJustMovement();
+                        UTGameManager.PlayerMoveController.EnableChacaterController();
+                        Refs.PlayerCarDoor.GetAction<CarGetOutAction>().Door.Close();
+                        Debug.Log("HERE  :)");
+                    })
+                    .Then(_ => _scheduler.When(() => IsInRange("PhotoArea")))
+                    .Then(_ => 
+                    {
+                        Refs.ParkOOB.gameObject.SetActive(true);
 
-                    //    GameManager.GetMonoSystem<ITrafficMonoSystem>().Enabled = false;
+                        GameManager.GetMonoSystem<ITrafficMonoSystem>().Enabled = false;
 
-                    //    UTGameManager.PlayerViewController.EnableCamera = true;
-                    //    GameManager.GetMonoSystem<IUIMonoSystem>().GetView<PolaroidView>().SetHints(true);
-                    //    GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().SetCameraHint(true);
+                        UTGameManager.PlayerViewController.EnableCamera = true;
+                        GameManager.GetMonoSystem<IUIMonoSystem>().GetView<PolaroidView>().SetHints(true);
+                        GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().SetCameraHint(true);
 
-                    //    float t = 0f;
-                    //    Refs.TrafficSpline.Evaluate(3, t, out float3 pos, out float3 tangent, out float3 _);
-                    //    Quaternion rot = Quaternion.LookRotation(tangent, Vector3.up);
-                    //    Transform car = Refs.PlayerCarController.transform;
-                    //    car.SetPositionAndRotation(pos, rot);
+                        float t = 0f;
+                        Refs.TrafficSpline.Evaluate(3, t, out float3 pos, out float3 tangent, out float3 _);
+                        Quaternion rot = Quaternion.LookRotation(tangent, Vector3.up);
+                        Transform car = Refs.PlayerCarController.transform;
+                        car.SetPositionAndRotation(pos, rot);
 
-                    //    return _dialogueMs.StartDialoguePromise("Arrive", true);
-                    //})
-                    //.Then(_ => _scheduler.When(() => IsTriggered("GotPhotos")))
-                    //.Then(_ =>
-                    //{
-                    //    UTGameManager.PlayerViewController.ToggleFirstPerson(false);
-                    //    Refs.SightingScene.StartScene();
-                    //})
-                    //.Then(_ => _scheduler.Wait(4))
-                    //.Then(_ =>
-                    //{
-                    //    Refs.SightingScene.PlayGunshot();
-                    //    GameManager.GetMonoSystem<IFowlMonoSystem>().ForceAllToFlyOff();
-                    //    UTGameManager.PlayerViewController.ToggleFirstPerson(false);
-                    //})
-                    //.Then(_ => _scheduler.Wait(0.4f))
-                    //.Then(_ => 
-                    //{
-                    //    GameManager.GetMonoSystem<IUIMonoSystem>().GetView<PolaroidView>().SetHints(false);
-                    //    Refs.ParkOOB.SetDialogue("Park2OOB");
-                    //    return _dialogueMs.StartDialoguePromise("Gunshot", passive: true);
-                    //})
-                    //.Then(_ => _scheduler.When(() => Refs.SightingScene.IsCameraLookingAtScene()))
-                    //.Then(_ =>
-                    //{
-                    //    UTGameManager.PlayerMoveController.Freeze();
-                    //    Refs.SightingScene.LookAtScene();
-                    //})
-                    //.Then(_ => _scheduler.Wait(1.7f))
-                    //.Then(_ => _dialogueMs.StartDialoguePromise("SceneComments"))
-                    //.Then(_ => _scheduler.Wait(1.0f))
-                    //.Then(_ =>
-                    //{
-                    //    Refs.SightingScene.PushPerson();
-                    //})
-                    //.Then(_ => _scheduler.When(() => !Refs.SightingScene.IsFalling()))
-                    //.Then(_ =>
-                    //{
-                    //    UTGameManager.PlayerMoveController.Unfreeze();
-                    //    UTGameManager.PlayerViewController.ToggleFirstPerson(false);
-                    //})
-                    //.Then(_ => 
-                    //{
-                    //    UTGameManager.PlayerViewController.EnableCamera = false;
-                    //    Refs.ParkOOB.gameObject.SetActive(false);
-                    //    GameManager.GetMonoSystem<ITrafficMonoSystem>().Enabled = true;
-                    //    Refs.RoadOOB.SetDialogue("Road2OOB");
-                    //    return _dialogueMs.StartDialoguePromise("GottaGo", passive: true);
-                    //})
-                    // Car Off
+                        return _dialogueMs.StartDialoguePromise("Arrive", true);
+                    })
+                    .Then(_ => _scheduler.When(() => IsTriggered("GotPhotos")))
+                    .Then(_ =>
+                    {
+                        UTGameManager.PlayerViewController.ToggleFirstPerson(false);
+                        Refs.SightingScene.StartScene();
+                    })
+                    .Then(_ => _scheduler.Wait(4))
+                    .Then(_ =>
+                    {
+                        Refs.SightingScene.PlayGunshot();
+                        GameManager.GetMonoSystem<IFowlMonoSystem>().ForceAllToFlyOff();
+                        UTGameManager.PlayerViewController.ToggleFirstPerson(false);
+                    })
+                    .Then(_ => _scheduler.Wait(0.4f))
+                    .Then(_ => 
+                    {
+                        GameManager.GetMonoSystem<IUIMonoSystem>().GetView<PolaroidView>().SetHints(false);
+                        Refs.ParkOOB.SetDialogue("Park2OOB");
+                        return _dialogueMs.StartDialoguePromise("Gunshot", passive: true);
+                    })
+                    .Then(_ => _scheduler.When(() => Refs.SightingScene.IsCameraLookingAtScene()))
+                    .Then(_ =>
+                    {
+                        UTGameManager.PlayerMoveController.Freeze();
+                        Refs.SightingScene.LookAtScene();
+                    })
+                    .Then(_ => _scheduler.Wait(1.7f))
+                    .Then(_ => _dialogueMs.StartDialoguePromise("SceneComments"))
+                    .Then(_ => _scheduler.Wait(1.0f))
+                    .Then(_ =>
+                    {
+                        Refs.SightingScene.PushPerson();
+                    })
+                    .Then(_ => _scheduler.When(() => !Refs.SightingScene.IsFalling()))
+                    .Then(_ =>
+                    {
+                        UTGameManager.PlayerMoveController.Unfreeze();
+                        UTGameManager.PlayerViewController.ToggleFirstPerson(false);
+                    })
+                    .Then(_ => 
+                    {
+                        UTGameManager.PlayerViewController.EnableCamera = false;
+                        Refs.ParkOOB.gameObject.SetActive(false);
+                        GameManager.GetMonoSystem<ITrafficMonoSystem>().Enabled = true;
+                        Refs.RoadOOB.SetDialogue("Road2OOB");
+                        return _dialogueMs.StartDialoguePromise("GottaGo", passive: true);
+                    })
+                     //Car Off
                     .Then(_ =>
                     {
                         Refs.PlayerCarDoor.CanInteract = true;
@@ -526,11 +536,19 @@ namespace ColbyO.Untitled.MonoSystems
                 {
                     bool hasJumped = GameManager.GetMonoSystem<IDialogueMonoSystem>().GetFlag("Jump");
 
-                    if (hasJumped) Trigger("Jump");
-                    else Trigger("NoJump");
+                    if (hasJumped) TriggerEvent("Jump");
+                    else TriggerEvent("NoJump");
                 });
                     break;
                 case "Jump":
+                    _dialogueMs.StartDialoguePromise("JumpOff");
+                    _dialogueMs.AddListener("Push", _ =>
+                    {
+                        UTGameManager.PlayerMoveController.gameObject.SetActive(false);
+                        Refs.PushPerson.SetActive(true);
+                        Refs.PushPersonRig.SetActive(true);
+                        Refs.PushPersonRb.AddForce(Vector3.back * 15.0f, ForceMode.VelocityChange);
+                    });
                     //GameManager.GetMonoSystem<IDialogueMonoSystem>().StartDialoguePromise("NoJump", passive: true)
                     //.Then(_ =>
                     //{
