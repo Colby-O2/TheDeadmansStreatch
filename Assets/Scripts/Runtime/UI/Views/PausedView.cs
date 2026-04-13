@@ -46,7 +46,6 @@ namespace ColbyO.Untitled
         {
             base.Hide();
             UTGameManager.PlayerInteractiorController.Controls.InspectionClickAction.performed -= OnClick;
-            VirtualCaster.HideCursor();
         }
 
         public void OnClick(InputAction.CallbackContext ctx)
@@ -88,6 +87,7 @@ namespace ColbyO.Untitled
 
         public void Resume()
         {
+            VirtualCaster.HideCursor();
             UTGameManager.IsPaused = false;
             _backdrop.SetActive(false);
             GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();

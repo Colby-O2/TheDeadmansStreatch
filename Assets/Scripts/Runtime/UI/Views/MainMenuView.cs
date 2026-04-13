@@ -56,7 +56,7 @@ namespace ColbyO.Untitled.UI
         public override void Hide()
         {
             base.Hide();
-            VirtualCaster.HideCursor();
+            //VirtualCaster.HideCursor();
             UTGameManager.PlayerInteractiorController.Controls.InspectionClickAction.performed -= OnClick;
         }
 

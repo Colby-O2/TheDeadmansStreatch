@@ -76,7 +76,7 @@ namespace ColbyO.Untitled
         {
             base.Hide();
             UTGameManager.PlayerInteractiorController.Controls.InspectionClickAction.performed -= OnClick;
-            VirtualCaster.HideCursor();
+            //VirtualCaster.HideCursor();
         }
 
         private void Back()
