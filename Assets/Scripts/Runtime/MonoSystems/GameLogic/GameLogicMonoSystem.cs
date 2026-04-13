@@ -542,13 +542,7 @@ namespace ColbyO.Untitled.MonoSystems
                         GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio("Shoot", PlazmaGames.Audio.AudioType.Sfx, false, true);
                         return GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(1f);
                     })
-                    .Then(_ => _scheduler.Wait(8f))
-                    .Then(_ =>
-                    {
-                        GameManager.GetMonoSystem<IUIMonoSystem>().Show<MainMenuView>();
-                        GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeIn(0f);
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                    });
+                    .Then(_ => _scheduler.Wait(5f));
                     break;
             }
         }
