@@ -1,7 +1,9 @@
 using InteractionSystem.Controls;
 using InteractionSystem.UI;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +17,7 @@ namespace ColbyO.Untitled.UI
     {
         [SerializeField] private Canvas _canvas;
         [SerializeField] private GameObject _view;
+        [SerializeField] private AudioSource _musicSource;
 
         [SerializeField] private EventButton _play;
         [SerializeField] private EventButton _settings;
@@ -22,6 +25,14 @@ namespace ColbyO.Untitled.UI
 
         [SerializeField] private GameObject _mainMenuCamera;
         [SerializeField] private GameObject _playerCamera;
+
+        private Coroutine _musicFadeRoutine;
+        private float _startVol;
+
+        private void Awake()
+        {
+            _startVol = _musicSource.volume;
+        }
 
         private void Update()
         {
@@ -97,12 +108,33 @@ namespace ColbyO.Untitled.UI
             ExecuteEvents.Execute(go, eventData, ExecuteEvents.pointerClickHandler);
         }
 
+        private IEnumerator FadeOutMusic(AudioSource source, float duration)
+        {
+            float startVolume = _startVol;
+
+            float time = 0f;
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                source.volume = Mathf.Lerp(startVolume * GameManager.GetMonoSystem<IAudioMonoSystem>().GetOverallVolume(), 0f, time / duration);
+                yield return null;
+            }
+
+            source.volume = 0f;
+            source.Stop();
+        }
+
         private void Play()
         {
             UTGameManager.HideCursor();
             VirtualCaster.HideCursor();
 
-            GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(3f)
+            float fadeOutTime = 3f;
+
+            if (_musicFadeRoutine != null) StopCoroutine(_musicFadeRoutine);
+            _musicFadeRoutine = StartCoroutine(FadeOutMusic(_musicSource, fadeOutTime));
+
+            GameManager.GetMonoSystem<IVisualEffectMonoSystem>().FadeOut(fadeOutTime)
             .Then(_ =>
             {
                 UTGameManager.HasStarted = true;
