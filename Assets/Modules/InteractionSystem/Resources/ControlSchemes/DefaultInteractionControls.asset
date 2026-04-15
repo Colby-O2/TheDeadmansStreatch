@@ -301,14 +301,6 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Inspection Leave
       m_Flags: 0
-    - m_Name: 
-      m_Id: e16a1738-e186-451f-a798-310ef35d1230
-      m_Path: <Keyboard>/e
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Inspection Leave
-      m_Flags: 0
     m_Flags: 0
   InspectionNextAction:
     m_Name: Inspection Next
@@ -320,7 +312,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: a5a90437-bf59-48c5-96f7-a46e8fabb5d6
-      m_Path: <Keyboard>/f
+      m_Path: <Keyboard>/e
       m_Interactions: 
       m_Processors: 
       m_Groups: 
